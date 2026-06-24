@@ -512,8 +512,19 @@ window.saveSetup = async function() {
     if (!days || days < 1) { showToast('Enter number of days'); return; }
   }
   const config = { startDate: startVal, totalDays: days };
-  await set(ref(db, 'config'), config);
-  loadConfig(config);
+  try {
+    await set(ref(db, 'config'), config);
+    loadConfig(config);
+    const start = new Date(START);
+    const end   = new Date(END);
+    const fmt   = {month:'short', day:'numeric'};
+    document.getElementById('loginDates').textContent =
+      `${start.toLocaleDateString('en-CA',fmt)} – ${end.toLocaleDateString('en-CA',fmt)} · ${TOTAL_DAYS} days`;
+    document.getElementById('setupScreen').classList.remove('active');
+    document.getElementById('loginScreen').classList.add('active');
+  } catch(e) {
+    showToast('Could not save — check connection');
+  }
 };
 
 function loadConfig(config) {
