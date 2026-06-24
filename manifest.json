@@ -1,0 +1,22 @@
+{
+  "name": "Life Overhaul",
+  "short_name": "Life Overhaul",
+  "description": "30-day habit challenge — Stephen vs Amber",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1D9E75",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/192x192/1D9E75/ffffff?text=LO",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/512x512/1D9E75/ffffff?text=LO",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
