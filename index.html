@@ -916,5 +916,6 @@ async function init(){
 
 init();
 </script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/life-overhaul/sw.js").then(()=>console.log("SW registered")).catch(e=>console.log("SW error",e));}</script>
 </body>
 </html>
