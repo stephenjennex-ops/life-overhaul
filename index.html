@@ -17,23 +17,18 @@
   --blue:#378ADD;--blue-l:#E6F1FB;--blue-d:#185FA5;
   --amber:#BA7517;--amber-l:#FAEEDA;--amber-b:#FAC775;
   --coral:#D85A30;--coral-l:#FAECE7;
+  --purple:#534AB7;--purple-l:#EEEDFE;
   --bg:#fff;--bg2:#F7F7F6;--bg3:#F1EFE8;
   --text:#1a1a1a;--text2:#666;--text3:#999;
   --border:rgba(0,0,0,0.1);--border2:rgba(0,0,0,0.2);
   --r:10px;--rl:14px;--rxl:20px;
-  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-bottom:env(safe-area-inset-bottom,0px);
 }
 @media(prefers-color-scheme:dark){
-  :root{
-    --bg:#1a1a18;--bg2:#252523;--bg3:#2e2e2b;
-    --text:#f0ede6;--text2:#a0a09a;--text3:#666;
-    --border:rgba(255,255,255,0.1);--border2:rgba(255,255,255,0.2);
-  }
+  :root{--bg:#1a1a18;--bg2:#252523;--bg3:#2e2e2b;--text:#f0ede6;--text2:#a0a09a;--text3:#666;--border:rgba(255,255,255,0.1);--border2:rgba(255,255,255,0.2);}
 }
 html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.5}
-.app{max-width:430px;margin:0 auto;height:100%;display:flex;flex-direction:column;position:relative}
-
-/* SCREENS */
+.app{max-width:430px;margin:0 auto;height:100%;display:flex;flex-direction:column;position:relative;overflow:hidden}
 .screen{display:none;flex-direction:column;flex:1;overflow:hidden}
 .screen.active{display:flex}
 
@@ -43,39 +38,57 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 @keyframes spin{to{transform:rotate(360deg)}}
 .load-text{font-size:14px;color:var(--text2)}
 
+/* SETUP SCREEN */
+#setupScreen{background:var(--bg);overflow-y:auto}
+.setup-hero{background:var(--green);padding:3rem 1.5rem 2rem;text-align:center}
+.setup-hero h1{font-size:26px;font-weight:700;color:#fff;letter-spacing:-0.5px}
+.setup-hero p{font-size:14px;color:rgba(255,255,255,0.8);margin-top:4px}
+.setup-body{padding:1.5rem}
+.setup-field{margin-bottom:1.25rem}
+.setup-label{font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px}
+.setup-input{width:100%;padding:12px 14px;border:1px solid var(--border2);border-radius:var(--r);font-size:15px;background:var(--bg);color:var(--text);outline:none}
+.setup-input:focus{border-color:var(--green)}
+.duration-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.dur-btn{padding:10px 4px;border:1px solid var(--border2);border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;background:var(--bg);color:var(--text);text-align:center;transition:all 0.15s}
+.dur-btn.selected{background:var(--green);border-color:var(--green);color:#fff}
+.dur-custom{margin-top:8px;display:none}
+.setup-btn{width:100%;padding:14px;background:var(--green);color:#fff;border:none;border-radius:var(--r);font-size:16px;font-weight:600;cursor:pointer;margin-top:8px}
+.setup-btn:active{opacity:0.85}
+
 /* LOGIN */
 #loginScreen{background:var(--bg)}
 .login-hero{background:var(--green);padding:3rem 1.5rem 2.5rem;text-align:center}
-.login-hero h1{font-size:26px;font-weight:600;color:#fff;letter-spacing:-0.5px}
-.login-hero p{font-size:14px;color:rgba(255,255,255,0.75);margin-top:4px}
-.login-dates{display:inline-block;background:rgba(255,255,255,0.2);color:#fff;font-size:12px;padding:4px 12px;border-radius:20px;margin-top:10px}
+.login-hero h1{font-size:26px;font-weight:700;color:#fff;letter-spacing:-0.5px}
+.login-hero p{font-size:14px;color:rgba(255,255,255,0.8);margin-top:4px}
+.login-dates{display:inline-block;background:rgba(255,255,255,0.2);color:#fff;font-size:12px;padding:4px 14px;border-radius:20px;margin-top:10px}
 .login-body{padding:1.5rem}
 .login-q{font-size:13px;color:var(--text2);margin-bottom:12px;font-weight:500}
 .player-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem}
 .player-card{border:1.5px solid var(--border);border-radius:var(--rl);padding:1.5rem 1rem;text-align:center;cursor:pointer;background:var(--bg);transition:all 0.15s;user-select:none}
 .player-card:active{transform:scale(0.97)}
 .player-card.selected{border-color:var(--green);background:var(--green-l)}
-.avatar{width:52px;height:52px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:600}
+.avatar{width:52px;height:52px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700}
 .av-s{background:var(--green-l);color:var(--green-d)}
 .av-a{background:var(--blue-l);color:var(--blue-d)}
 .player-card.selected .av-s{background:var(--green-m)}
-.pname{font-size:16px;font-weight:600;color:var(--text)}
+.pname{font-size:16px;font-weight:700;color:var(--text)}
 .prole{font-size:12px;color:var(--text2);margin-top:2px}
-.login-btn{width:100%;padding:14px;background:var(--green);color:#fff;border:none;border-radius:var(--r);font-size:16px;font-weight:600;cursor:pointer;opacity:0.35;transition:all 0.15s}
+.login-btn{width:100%;padding:14px;background:var(--green);color:#fff;border:none;border-radius:var(--r);font-size:16px;font-weight:700;cursor:pointer;opacity:0.35;transition:all 0.15s}
 .login-btn.ready{opacity:1}
 .login-btn:active{transform:scale(0.98)}
+.reset-link{text-align:center;margin-top:14px;font-size:12px;color:var(--text3);cursor:pointer;text-decoration:underline}
 
 /* TOP BAR */
 .top-bar{background:var(--bg);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.top-bar-title{font-size:16px;font-weight:600;color:var(--text)}
+.top-bar-title{font-size:16px;font-weight:700;color:var(--text)}
 .user-pill{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);cursor:pointer;padding:6px 10px;border-radius:20px;border:1px solid var(--border);background:var(--bg2);user-select:none}
 .user-pill:active{opacity:0.7}
 
-/* SCROLLABLE CONTENT */
-.page-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 16px calc(16px + var(--safe-bottom))}
+/* PAGES */
+.page-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px 16px calc(72px + var(--safe-bottom))}
 
 /* BOTTOM NAV */
-.bottom-nav{display:flex;border-top:1px solid var(--border);background:var(--bg);padding-bottom:var(--safe-bottom);flex-shrink:0}
+.bottom-nav{display:flex;border-top:1px solid var(--border);background:var(--bg);padding-bottom:var(--safe-bottom);flex-shrink:0;position:absolute;bottom:0;left:0;right:0}
 .nav-tab{flex:1;padding:10px 4px 8px;text-align:center;cursor:pointer;color:var(--text3);font-size:10px;border:none;background:none;transition:color 0.15s;user-select:none}
 .nav-tab i{display:block;font-size:22px;margin-bottom:2px}
 .nav-tab.active{color:var(--green)}
@@ -88,10 +101,14 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .sb-label{font-size:11px;color:var(--text2);margin-bottom:4px}
 .sb-val{font-size:24px;font-weight:700;color:var(--text)}
 .score-box.mine .sb-val{color:var(--green-d)}
-.taunt{background:var(--amber-l);border:1px solid var(--amber-b);border-radius:var(--r);padding:10px 12px;margin-bottom:14px;font-size:13px;color:var(--amber);display:none;align-items:center;gap:8px}
-.taunt i{font-size:18px;flex-shrink:0}
+.incoming-gloat{background:var(--purple-l);border:1px solid #AFA9EC;border-radius:var(--r);padding:12px 14px;margin-bottom:14px;display:none}
+.ig-label{font-size:10px;font-weight:600;color:var(--purple);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px}
+.ig-text{font-size:14px;color:var(--text);font-style:italic}
+.ig-dismiss{font-size:11px;color:var(--text3);cursor:pointer;margin-top:6px;display:inline-block;text-decoration:underline}
+.taunt-auto{background:var(--amber-l);border:1px solid var(--amber-b);border-radius:var(--r);padding:10px 12px;margin-bottom:14px;font-size:13px;color:var(--amber);display:none;align-items:center;gap:8px}
+.taunt-auto i{font-size:18px;flex-shrink:0}
 .sec-label{font-size:11px;font-weight:600;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px}
-.habit-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.habit-list{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
 .habit-item{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--border);border-radius:var(--r);cursor:pointer;background:var(--bg);transition:all 0.15s;user-select:none}
 .habit-item:active{transform:scale(0.98)}
 .habit-item.done{background:var(--green-l);border-color:var(--green-m)}
@@ -103,14 +120,28 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .hrule{font-size:11px;color:var(--text2);margin-top:1px}
 .hcheck{width:24px;height:24px;border-radius:50%;border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:transparent;transition:all 0.15s}
 .habit-item.done .hcheck{background:var(--green);border-color:var(--green);color:#fff}
-.save-btn{width:100%;padding:14px;background:var(--green);color:#fff;border:none;border-radius:var(--r);font-size:15px;font-weight:600;cursor:pointer;transition:all 0.15s}
+.btn-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin-bottom:8px}
+.save-btn{padding:14px;background:var(--green);color:#fff;border:none;border-radius:var(--r);font-size:15px;font-weight:700;cursor:pointer;transition:all 0.15s}
 .save-btn:active{transform:scale(0.98);background:var(--green-d)}
 .save-btn.saved{background:var(--green-d)}
+.gloat-btn{padding:14px 16px;background:var(--purple-l);color:var(--purple);border:1px solid #AFA9EC;border-radius:var(--r);font-size:22px;cursor:pointer;transition:all 0.15s;white-space:nowrap}
+.gloat-btn:active{transform:scale(0.95)}
+.gloat-btn.disabled{opacity:0.35;pointer-events:none}
+
+/* GLOAT PICKER */
+.gloat-panel{background:var(--bg);border:1px solid var(--border);border-radius:var(--rl);padding:14px;margin-bottom:14px;display:none}
+.gloat-panel h4{font-size:13px;font-weight:600;color:var(--text);margin-bottom:10px}
+.gloat-options{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.gloat-opt{padding:10px 12px;border:1px solid var(--border);border-radius:var(--r);font-size:13px;cursor:pointer;background:var(--bg2);color:var(--text);transition:all 0.15s;text-align:left}
+.gloat-opt:hover{border-color:var(--purple);background:var(--purple-l);color:var(--purple)}
+.gloat-cancel{font-size:12px;color:var(--text3);cursor:pointer;text-decoration:underline}
 
 /* BATTLE */
 .battle-top{text-align:center;margin-bottom:16px}
 .battle-top h2{font-size:20px;font-weight:700;letter-spacing:-0.3px}
-.battle-top p{font-size:12px;color:var(--text2);margin-top:3px}
+.progress-bar-wrap{background:var(--bg2);border-radius:20px;height:6px;margin:8px 0 4px;overflow:hidden}
+.progress-bar-fill{height:100%;background:var(--green);border-radius:20px;transition:width 0.4s}
+.battle-sub{font-size:12px;color:var(--text2)}
 .vs-row{display:grid;grid-template-columns:1fr 44px 1fr;gap:8px;align-items:center;margin-bottom:16px}
 .vs-card{border:1px solid var(--border);border-radius:var(--rl);padding:14px 10px;text-align:center;background:var(--bg)}
 .vs-card.leading{border:2px solid var(--green);background:var(--green-l)}
@@ -124,7 +155,6 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .streak-card{background:var(--bg2);border-radius:var(--r);padding:10px 12px}
 .sk-label{font-size:11px;color:var(--text2)}
 .sk-val{font-size:18px;font-weight:700;color:var(--text);margin-top:2px}
-.sk-icon{font-size:16px;margin-right:4px}
 .section-block{margin-bottom:16px}
 .section-block h3{font-size:13px;font-weight:600;color:var(--text2);margin-bottom:10px}
 .week-table{border:1px solid var(--border);border-radius:var(--r);overflow:hidden;background:var(--bg)}
@@ -150,22 +180,21 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .cal-nav{display:flex;align-items:center;margin-bottom:14px;gap:8px}
 .cal-nav button{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);width:36px;height:36px;cursor:pointer;color:var(--text2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
 .cal-nav button:active{opacity:0.7}
-.cal-month{flex:1;text-align:center;font-size:16px;font-weight:600;color:var(--text)}
+.cal-month{flex:1;text-align:center;font-size:16px;font-weight:700;color:var(--text)}
 .cal-legend{display:flex;gap:14px;margin-bottom:12px}
 .cal-legend span{font-size:12px;color:var(--text2);display:flex;align-items:center;gap:5px}
 .leg-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
 .cal-dh{font-size:10px;color:var(--text3);text-align:center;padding:4px 0;font-weight:500}
-.cal-cell{border:1px solid var(--border);border-radius:8px;padding:4px;min-height:56px;background:var(--bg);cursor:pointer;transition:border-color 0.15s}
-.cal-cell:active{opacity:0.7}
+.cal-cell{border:1px solid var(--border);border-radius:8px;padding:4px;min-height:52px;background:var(--bg)}
 .cal-cell.today{border-color:var(--green);border-width:2px}
-.cal-cell.future{opacity:0.3;pointer-events:none}
-.cal-cell.empty{border:none;background:transparent;pointer-events:none}
-.cal-cell.before-start{opacity:0.15;pointer-events:none}
+.cal-cell.future{opacity:0.3}
+.cal-cell.empty{border:none;background:transparent}
+.cal-cell.before-start{opacity:0.15}
 .cal-dn{font-size:9px;color:var(--text2);margin-bottom:3px;font-weight:500}
 .cal-cell.today .cal-dn{color:var(--green-d);font-weight:700}
 .pip-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:2px}
-.pip{width:6px;height:6px;border-radius:50%;background:var(--border)}
+.pip{width:5px;height:5px;border-radius:50%;background:var(--border)}
 .pip.s{background:var(--green)}
 .pip.a{background:var(--blue)}
 
@@ -173,7 +202,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .profile-hero{background:var(--green);padding:2rem 1.5rem;text-align:center;border-radius:0 0 var(--rxl) var(--rxl);margin-bottom:16px}
 .profile-av{width:64px;height:64px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;background:rgba(255,255,255,0.25);color:#fff}
 .profile-name{font-size:20px;font-weight:700;color:#fff}
-.profile-sub{font-size:13px;color:rgba(255,255,255,0.75);margin-top:3px}
+.profile-sub{font-size:13px;color:rgba(255,255,255,0.8);margin-top:3px}
 .stat-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:16px}
 .stat-card{background:var(--bg2);border-radius:var(--r);padding:12px;text-align:center}
 .stat-val{font-size:20px;font-weight:700;color:var(--text)}
@@ -183,196 +212,211 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .bh-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
 .bh-row:last-child{margin-bottom:0}
 .bh-name{font-size:13px;color:var(--text);flex:1}
-.bh-bar-wrap{width:80px;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
-.bh-bar{height:100%;background:var(--green);border-radius:3px;transition:width 0.4s}
+.bh-bar-wrap{width:70px;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.bh-bar{height:100%;background:var(--green);border-radius:3px}
 .bh-pct{font-size:11px;color:var(--text2);min-width:28px;text-align:right}
-.logout-btn{width:100%;padding:13px;background:transparent;color:var(--coral);border:1px solid var(--coral);border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;transition:all 0.15s}
+.logout-btn{width:100%;padding:13px;background:transparent;color:var(--coral);border:1px solid var(--coral);border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;margin-bottom:10px}
 .logout-btn:active{background:var(--coral-l)}
+.reset-comp-btn{width:100%;padding:13px;background:transparent;color:var(--text3);border:1px solid var(--border);border-radius:var(--r);font-size:14px;cursor:pointer}
 
 /* TOAST */
 .toast{position:fixed;bottom:calc(80px + var(--safe-bottom));left:50%;transform:translateX(-50%) translateY(20px);background:var(--text);color:var(--bg);padding:10px 18px;border-radius:20px;font-size:13px;font-weight:500;opacity:0;transition:all 0.3s;pointer-events:none;white-space:nowrap;z-index:100}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
-/* UTIL */
 .divider{height:1px;background:var(--border);margin:14px 0}
 </style>
 </head>
 <body>
 <div class="app">
 
-  <!-- LOADING -->
-  <div class="screen active" id="loadingScreen">
-    <div class="spinner"></div>
-    <div class="load-text">Loading...</div>
+<!-- LOADING -->
+<div class="screen active" id="loadingScreen">
+  <div class="spinner"></div>
+  <div class="load-text">Loading...</div>
+</div>
+
+<!-- SETUP -->
+<div class="screen" id="setupScreen">
+  <div class="setup-hero">
+    <h1>Life Overhaul 💪</h1>
+    <p>Set up your competition</p>
+  </div>
+  <div class="setup-body">
+    <div class="setup-field">
+      <div class="setup-label">Competition start date</div>
+      <input type="date" class="setup-input" id="setupStartDate">
+    </div>
+    <div class="setup-field">
+      <div class="setup-label">Duration</div>
+      <div class="duration-grid">
+        <div class="dur-btn" onclick="selectDur(30,this)">30 days</div>
+        <div class="dur-btn" onclick="selectDur(60,this)">60 days</div>
+        <div class="dur-btn" onclick="selectDur(90,this)">90 days</div>
+        <div class="dur-btn" onclick="selectDur(0,this)">Custom</div>
+      </div>
+      <div class="dur-custom" id="durCustom">
+        <input type="number" class="setup-input" id="setupCustomDays" placeholder="Enter number of days" min="1" max="365" style="margin-top:8px">
+      </div>
+    </div>
+    <button class="setup-btn" onclick="saveSetup()">Start the competition →</button>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div class="screen" id="loginScreen">
+  <div class="login-hero">
+    <h1>Life Overhaul 💪</h1>
+    <p>Stephen vs Amber — who wants it more?</p>
+    <div class="login-dates" id="loginDates">Loading...</div>
+  </div>
+  <div class="login-body">
+    <div class="login-q">Who are you?</div>
+    <div class="player-cards">
+      <div class="player-card" id="cardS" onclick="selectPlayer('stephen')">
+        <div class="avatar av-s">SJ</div>
+        <div class="pname">Stephen</div>
+        <div class="prole">the challenger</div>
+      </div>
+      <div class="player-card" id="cardA" onclick="selectPlayer('amber')">
+        <div class="avatar av-a">AJ</div>
+        <div class="pname">Amber</div>
+        <div class="prole">the challenger</div>
+      </div>
+    </div>
+    <button class="login-btn" id="loginBtn" onclick="doLogin()">Let's go →</button>
+    <div class="reset-link" onclick="resetCompetition()">Change competition settings</div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div class="screen" id="appScreen">
+  <div class="top-bar">
+    <div class="top-bar-title" id="topTitle">Today</div>
+    <div class="user-pill" onclick="showPage('profile')">
+      <i class="ti ti-user" style="font-size:14px"></i>
+      <span id="topUser">Stephen</span>
+    </div>
   </div>
 
-  <!-- LOGIN -->
-  <div class="screen" id="loginScreen">
-    <div class="login-hero">
-      <h1>Life Overhaul 💪</h1>
-      <p>Stephen vs Amber — who wants it more?</p>
-      <div class="login-dates">July 1 – July 30, 2026</div>
-    </div>
-    <div class="login-body">
-      <div class="login-q">Who are you logging in as?</div>
-      <div class="player-cards">
-        <div class="player-card" id="cardS" onclick="selectPlayer('stephen')">
-          <div class="avatar av-s">SJ</div>
-          <div class="pname">Stephen</div>
-          <div class="prole">the challenger</div>
-        </div>
-        <div class="player-card" id="cardA" onclick="selectPlayer('amber')">
-          <div class="avatar av-a">AJ</div>
-          <div class="pname">Amber</div>
-          <div class="prole">the challenger</div>
-        </div>
+  <!-- TODAY -->
+  <div class="page-scroll" id="pageToday" style="display:none">
+    <div class="date-line" id="dateLine"></div>
+    <div class="score-duo">
+      <div class="score-box mine">
+        <div class="sb-label">My score today</div>
+        <div class="sb-val" id="myScore">0/10</div>
       </div>
-      <button class="login-btn" id="loginBtn" onclick="doLogin()">Let's go →</button>
-    </div>
-  </div>
-
-  <!-- MAIN APP -->
-  <div class="screen" id="appScreen">
-    <div class="top-bar">
-      <div class="top-bar-title" id="topTitle">Today</div>
-      <div class="user-pill" onclick="showPage('profile')">
-        <i class="ti ti-user" style="font-size:14px"></i>
-        <span id="topUser">Stephen</span>
+      <div class="score-box">
+        <div class="sb-label" id="theirLabel">Amber today</div>
+        <div class="sb-val" id="theirScore">—</div>
       </div>
     </div>
-
-    <!-- TODAY -->
-    <div class="page-scroll" id="pageToday" style="display:none">
-      <div class="date-line" id="dateLine"></div>
-      <div class="score-duo">
-        <div class="score-box mine">
-          <div class="sb-label" id="myLabel">My score</div>
-          <div class="sb-val" id="myScore">0/10</div>
-        </div>
-        <div class="score-box">
-          <div class="sb-label" id="theirLabel">Amber today</div>
-          <div class="sb-val" id="theirScore">—</div>
-        </div>
-      </div>
-      <div class="taunt" id="tauntBox">
-        <i class="ti ti-flame"></i>
-        <span id="tauntText"></span>
-      </div>
-      <div class="sec-label">Check off your habits</div>
-      <div class="habit-list" id="habitList"></div>
+    <div class="incoming-gloat" id="incomingGloat">
+      <div class="ig-label" id="igFrom">😏 Stephen says:</div>
+      <div class="ig-text" id="igText"></div>
+      <span class="ig-dismiss" onclick="dismissGloat()">dismiss</span>
+    </div>
+    <div class="taunt-auto" id="tauntAuto">
+      <i class="ti ti-flame"></i>
+      <span id="tauntText"></span>
+    </div>
+    <div class="gloat-panel" id="gloatPanel">
+      <h4>💬 Pick your gloat</h4>
+      <div class="gloat-options" id="gloatOptions"></div>
+      <span class="gloat-cancel" onclick="closeGloat()">cancel</span>
+    </div>
+    <div class="sec-label">Check off your habits</div>
+    <div class="habit-list" id="habitList"></div>
+    <div class="btn-row">
       <button class="save-btn" id="saveBtn" onclick="saveToday()">Save today's log</button>
+      <button class="gloat-btn" id="gloatBtn" onclick="toggleGloat()" title="Gloat 😏">😏</button>
     </div>
-
-    <!-- BATTLE -->
-    <div class="page-scroll" id="pageBattle" style="display:none">
-      <div class="battle-top">
-        <h2>The Battle ⚔️</h2>
-        <p id="dayCount">Day 0 of 30 · July 1–30</p>
-      </div>
-      <div class="vs-row">
-        <div class="vs-card" id="vsS">
-          <div class="vs-name">Stephen</div>
-          <div class="vs-pts" id="vsPtsS">0</div>
-          <div class="vs-sub">points</div>
-        </div>
-        <div class="vs-sep">VS</div>
-        <div class="vs-card" id="vsA">
-          <div class="vs-name">Amber</div>
-          <div class="vs-pts" id="vsPtsA">0</div>
-          <div class="vs-sub">points</div>
-        </div>
-      </div>
-      <div class="streaks">
-        <div class="streak-card">
-          <div class="sk-label">🔥 Stephen streak</div>
-          <div class="sk-val" id="strkS">0 days</div>
-        </div>
-        <div class="streak-card">
-          <div class="sk-label">🔥 Amber streak</div>
-          <div class="sk-val" id="strkA">0 days</div>
-        </div>
-      </div>
-      <div class="section-block">
-        <h3>Weekly winners — winner picks a dare for the loser</h3>
-        <div class="week-table" id="weekTable"></div>
-      </div>
-      <div class="section-block">
-        <h3>Habit breakdown</h3>
-        <div class="hb-table" id="hbTable"></div>
-      </div>
-    </div>
-
-    <!-- CALENDAR -->
-    <div class="page-scroll" id="pageCal" style="display:none">
-      <div class="cal-nav">
-        <button onclick="calShift(-1)"><i class="ti ti-chevron-left"></i></button>
-        <div class="cal-month" id="calMonth"></div>
-        <button onclick="calShift(1)"><i class="ti ti-chevron-right"></i></button>
-      </div>
-      <div class="cal-legend">
-        <span><div class="leg-dot" style="background:var(--green)"></div>Stephen</span>
-        <span><div class="leg-dot" style="background:var(--blue)"></div>Amber</span>
-      </div>
-      <div class="cal-grid" id="calGrid">
-        <div class="cal-dh">Su</div><div class="cal-dh">Mo</div><div class="cal-dh">Tu</div>
-        <div class="cal-dh">We</div><div class="cal-dh">Th</div><div class="cal-dh">Fr</div><div class="cal-dh">Sa</div>
-      </div>
-    </div>
-
-    <!-- PROFILE -->
-    <div class="page-scroll" id="pageProfile" style="display:none">
-      <div class="profile-hero">
-        <div class="profile-av" id="profileAv">SJ</div>
-        <div class="profile-name" id="profileName">Stephen</div>
-        <div class="profile-sub" id="profileSub">0 points total</div>
-      </div>
-      <div class="stat-grid">
-        <div class="stat-card">
-          <div class="stat-val" id="statTotal">0</div>
-          <div class="stat-label">Total pts</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-val" id="statStreak">0</div>
-          <div class="stat-label">Day streak</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-val" id="statPerfect">0</div>
-          <div class="stat-label">Perfect days</div>
-        </div>
-      </div>
-      <div class="sec-label">Your best habits</div>
-      <div class="best-habit" id="bestHabits"></div>
-      <div class="divider"></div>
-      <button class="logout-btn" onclick="logout()">Switch player</button>
-    </div>
-
-    <nav class="bottom-nav">
-      <button class="nav-tab" id="tabToday" onclick="showPage('today')">
-        <i class="ti ti-sun"></i>Today
-      </button>
-      <button class="nav-tab" id="tabBattle" onclick="showPage('battle')">
-        <i class="ti ti-trophy"></i>Battle
-      </button>
-      <button class="nav-tab" id="tabCal" onclick="showPage('cal')">
-        <i class="ti ti-calendar"></i>Calendar
-      </button>
-      <button class="nav-tab" id="tabProfile" onclick="showPage('profile')">
-        <i class="ti ti-user"></i>Me
-      </button>
-    </nav>
   </div>
+
+  <!-- BATTLE -->
+  <div class="page-scroll" id="pageBattle" style="display:none">
+    <div class="battle-top">
+      <h2>The Battle ⚔️</h2>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progressFill" style="width:0%"></div></div>
+      <div class="battle-sub" id="battleSub">Day 0 of 30</div>
+    </div>
+    <div class="vs-row">
+      <div class="vs-card" id="vsS">
+        <div class="vs-name">Stephen</div>
+        <div class="vs-pts" id="vsPtsS">0</div>
+        <div class="vs-sub">points</div>
+      </div>
+      <div class="vs-sep">VS</div>
+      <div class="vs-card" id="vsA">
+        <div class="vs-name">Amber</div>
+        <div class="vs-pts" id="vsPtsA">0</div>
+        <div class="vs-sub">points</div>
+      </div>
+    </div>
+    <div class="streaks">
+      <div class="streak-card"><div class="sk-label">🔥 Stephen streak</div><div class="sk-val" id="strkS">0 days</div></div>
+      <div class="streak-card"><div class="sk-label">🔥 Amber streak</div><div class="sk-val" id="strkA">0 days</div></div>
+    </div>
+    <div class="section-block">
+      <h3>Weekly winners — winner picks a dare for the loser</h3>
+      <div class="week-table" id="weekTable"></div>
+    </div>
+    <div class="section-block">
+      <h3>Habit breakdown <span style="font-size:11px;color:var(--text3);font-weight:400">(S vs A)</span></h3>
+      <div class="hb-table" id="hbTable"></div>
+    </div>
+  </div>
+
+  <!-- CALENDAR -->
+  <div class="page-scroll" id="pageCal" style="display:none">
+    <div class="cal-nav">
+      <button onclick="calShift(-1)"><i class="ti ti-chevron-left"></i></button>
+      <div class="cal-month" id="calMonth"></div>
+      <button onclick="calShift(1)"><i class="ti ti-chevron-right"></i></button>
+    </div>
+    <div class="cal-legend">
+      <span><div class="leg-dot" style="background:var(--green)"></div>Stephen</span>
+      <span><div class="leg-dot" style="background:var(--blue)"></div>Amber</span>
+    </div>
+    <div class="cal-grid" id="calGrid">
+      <div class="cal-dh">Su</div><div class="cal-dh">Mo</div><div class="cal-dh">Tu</div>
+      <div class="cal-dh">We</div><div class="cal-dh">Th</div><div class="cal-dh">Fr</div><div class="cal-dh">Sa</div>
+    </div>
+  </div>
+
+  <!-- PROFILE -->
+  <div class="page-scroll" id="pageProfile" style="display:none">
+    <div class="profile-hero">
+      <div class="profile-av" id="profileAv">SJ</div>
+      <div class="profile-name" id="profileName">Stephen</div>
+      <div class="profile-sub" id="profileSub">0 points total</div>
+    </div>
+    <div class="stat-grid">
+      <div class="stat-card"><div class="stat-val" id="statTotal">0</div><div class="stat-label">Total pts</div></div>
+      <div class="stat-card"><div class="stat-val" id="statStreak">0</div><div class="stat-label">Day streak</div></div>
+      <div class="stat-card"><div class="stat-val" id="statPerfect">0</div><div class="stat-label">Perfect days</div></div>
+    </div>
+    <div class="sec-label">Your best habits</div>
+    <div class="best-habit" id="bestHabits"></div>
+    <div class="divider"></div>
+    <button class="logout-btn" onclick="logout()">Switch player</button>
+    <button class="reset-comp-btn" onclick="resetCompetition()">Reset competition settings</button>
+  </div>
+
+  <nav class="bottom-nav">
+    <button class="nav-tab" id="tabToday" onclick="showPage('today')"><i class="ti ti-sun"></i>Today</button>
+    <button class="nav-tab" id="tabBattle" onclick="showPage('battle')"><i class="ti ti-trophy"></i>Battle</button>
+    <button class="nav-tab" id="tabCal" onclick="showPage('cal')"><i class="ti ti-calendar"></i>Calendar</button>
+    <button class="nav-tab" id="tabProfile" onclick="showPage('profile')"><i class="ti ti-user"></i>Me</button>
+  </nav>
+</div>
 </div>
 
 <div class="toast" id="toast"></div>
 
-<!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { getDatabase, ref, onValue, set, get, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-// ============================================================
-// 🔥 REPLACE THESE WITH YOUR FIREBASE CONFIG
-// ============================================================
 const firebaseConfig = {
   apiKey: "AIzaSyBGrUQmYfz6LlrZran0tR03UsAPKRUrEMk",
   authDomain: "life-overhaul.firebaseapp.com",
@@ -383,95 +427,139 @@ const firebaseConfig = {
   appId: "1:631324436388:web:db8e5246727179b2244331",
   measurementId: "G-WPTLDGR7B1"
 };
-// ============================================================
 
 const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+const db  = getDatabase(app);
 
 const HABITS = [
-  {id:'read',    name:'Read 20 pages',            rule:'Any book counts',              icon:'ti-book'},
-  {id:'med',     name:'Meditate',                  rule:'10 min minimum',               icon:'ti-brain'},
-  {id:'sober',   name:'Sober',                     rule:'Zero alcohol all day',         icon:'ti-glass-off'},
-  {id:'workout', name:'Workout',                   rule:'Any intentional exercise',     icon:'ti-barbell'},
-  {id:'nocmp',   name:'No complaining',            rule:'Full day, self-monitored',     icon:'ti-mood-smile'},
-  {id:'journal', name:'Journal',                   rule:'5–10 min, pen or digital',     icon:'ti-pencil'},
-  {id:'sleep',   name:'Sleep 7+ hrs',              rule:'Track it honestly',            icon:'ti-moon'},
-  {id:'nophone', name:'No phone first 30 min',     rule:'From the moment you wake',     icon:'ti-device-mobile-off'},
-  {id:'amber',   name:'Intentional time together', rule:'Planned, phones down, 20+ min',icon:'ti-heart'},
-  {id:'chore',   name:'One house chore',           rule:'Unprompted, without being asked',icon:'ti-home'},
+  {id:'read',    name:'Read 20 pages',             rule:'Any book counts',               icon:'ti-book'},
+  {id:'med',     name:'Meditate',                   rule:'10 min minimum',                icon:'ti-brain'},
+  {id:'sober',   name:'Sober',                      rule:'Zero alcohol all day',          icon:'ti-glass-off'},
+  {id:'workout', name:'Workout',                    rule:'Any intentional exercise',      icon:'ti-barbell'},
+  {id:'nocmp',   name:'No complaining',             rule:'Full day, self-monitored',      icon:'ti-mood-smile'},
+  {id:'journal', name:'Journal',                    rule:'5–10 min, pen or digital',      icon:'ti-pencil'},
+  {id:'sleep',   name:'Sleep 7+ hrs',               rule:'Track it honestly',             icon:'ti-moon'},
+  {id:'nophone', name:'No phone first 30 min',      rule:'From the moment you wake',      icon:'ti-device-mobile-off'},
+  {id:'together',name:'Intentional time together',  rule:'Planned, phones down, 20+ min', icon:'ti-heart'},
+  {id:'chore',   name:'One house chore',            rule:'Unprompted, without being asked',icon:'ti-home'},
 ];
 
-const TAUNTS = [
-  "Amber's already ahead of you today 😏",
-  "She's not waiting for you to catch up 🏃‍♀️",
-  "The scoreboard doesn't lie, buddy 👀",
-  "Tick tock — are you going to let her win? ⏰",
-  "Sitting there instead of logging habits? Bold strategy 😂",
-  "Amber called. She said 'try harder' 📞",
-  "Even Gyro is judging you right now 🐱",
-  "Kita completed more habits than you today 🐕",
+const GLOATS_S = [
+  "Still catching up to me, babe 😏",
+  "Don't worry, I'll slow down so you can see me win 👋",
+  "Scoreboard doesn't lie. Just saying 🏆",
+  "Your streak called — it went missing 😂",
+  "I read, meditated, AND did a chore today. You? 👀",
+  "Even Gyro is impressed with my discipline 🐱",
+  "Kita said she's rooting for me. Sorry 🐕",
+  "This is what peak performance looks like 💪",
 ];
-
-const TAUNTS_A = [
-  "Stephen's ahead of you today 😏",
-  "He logged before breakfast — just saying 🌅",
-  "The scoreboard doesn't lie 👀",
-  "Tick tock Amber ⏰",
-  "He's been sitting on that lead all day 😂",
-  "Stephen called. He said 'good luck' 😇",
+const GLOATS_A = [
+  "Cute that you think you're winning 😘",
+  "I logged all 10 today. How's your score? 💅",
+  "The scoreboard is uncomfortable for you right now, isn't it 😂",
+  "Keep working babe, you'll get there eventually 👏",
+  "Gyro is judging you, not me 🐱",
+  "I did my chore AND yours today, so... 😏",
+  "Winning feels so good 🏆",
+  "Don't worry, I'll go easy on the dare 😇",
 ];
-
-const START = new Date(2026, 6, 1);
-const END   = new Date(2026, 6, 30);
+const AUTO_TAUNTS_S = [
+  "Amber's ahead of you right now 😏",
+  "She logged more habits than you today 👀",
+  "The lead is hers — for now ⏰",
+  "Amber said good luck. She didn't mean it 😂",
+];
+const AUTO_TAUNTS_A = [
+  "Stephen's ahead of you right now 😏",
+  "He logged before you today 👀",
+  "He's sitting on that lead — go catch up ⏰",
+  "Stephen said good luck. He didn't mean it 😂",
+];
 
 let currentUser = null;
 let liveData    = {};
-let calY = 2026, calM = 6;
 let localEdits  = {};
 let unsubscribe = null;
+let calY, calM;
+let START, END, TOTAL_DAYS;
+let gloatOpen   = false;
+let selectedDur = 30;
 
-function dk(y, m, d) { return `${y}_${m}_${d}`; }
-function todayKey() {
-  const n = new Date();
-  return dk(n.getFullYear(), n.getMonth(), n.getDate());
+function dk(y,m,d){return`${y}_${m}_${d}`}
+function todayKey(){const n=new Date();return dk(n.getFullYear(),n.getMonth(),n.getDate())}
+
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2200);
 }
 
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2200);
+// ---------- SETUP ----------
+window.selectDur = function(days, el) {
+  selectedDur = days;
+  document.querySelectorAll('.dur-btn').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('durCustom').style.display = days === 0 ? 'block' : 'none';
+};
+
+window.saveSetup = async function() {
+  const startVal = document.getElementById('setupStartDate').value;
+  if (!startVal) { showToast('Pick a start date'); return; }
+  let days = selectedDur;
+  if (days === 0) {
+    days = parseInt(document.getElementById('setupCustomDays').value);
+    if (!days || days < 1) { showToast('Enter number of days'); return; }
+  }
+  const config = { startDate: startVal, totalDays: days };
+  await set(ref(db, 'config'), config);
+  loadConfig(config);
+};
+
+function loadConfig(config) {
+  if (!config) return false;
+  const parts = config.startDate.split('-');
+  START      = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+  TOTAL_DAYS = config.totalDays;
+  END        = new Date(START);
+  END.setDate(END.getDate() + TOTAL_DAYS - 1);
+  calY = START.getFullYear();
+  calM = START.getMonth();
+  return true;
 }
+
+window.resetCompetition = function() {
+  if (!confirm('Reset competition settings? This will NOT delete habit logs.')) return;
+  remove(ref(db, 'config'));
+  logout();
+  document.getElementById('loginScreen').classList.remove('active');
+  document.getElementById('setupScreen').classList.add('active');
+};
 
 // ---------- LOGIN ----------
 window.selectPlayer = function(p) {
   currentUser = p;
-  document.getElementById('cardS').classList.toggle('selected', p === 'stephen');
-  document.getElementById('cardA').classList.toggle('selected', p === 'amber');
+  document.getElementById('cardS').classList.toggle('selected', p==='stephen');
+  document.getElementById('cardA').classList.toggle('selected', p==='amber');
   document.getElementById('loginBtn').classList.add('ready');
 };
 
 window.doLogin = function() {
   if (!currentUser) return;
-  document.getElementById('topUser').textContent = currentUser === 'stephen' ? 'Stephen' : 'Amber';
+  document.getElementById('topUser').textContent = currentUser==='stephen' ? 'Stephen' : 'Amber';
   document.getElementById('loginScreen').classList.remove('active');
   document.getElementById('appScreen').classList.add('active');
-
-  // Subscribe to Firebase real-time updates
-  const dbRef = ref(db, 'logs');
-  unsubscribe = onValue(dbRef, (snapshot) => {
-    liveData = snapshot.val() || {};
+  unsubscribe = onValue(ref(db,'logs'), snap => {
+    liveData = snap.val() || {};
     Object.assign(liveData, localEdits);
     refreshAll();
   });
-
   showPage('today');
 };
 
 window.logout = function() {
-  if (unsubscribe) { unsubscribe(); unsubscribe = null; }
-  currentUser = null;
-  localEdits  = {};
+  if (unsubscribe) { unsubscribe(); unsubscribe=null; }
+  currentUser=null; localEdits={};
   document.getElementById('appScreen').classList.remove('active');
   document.getElementById('loginScreen').classList.add('active');
   document.getElementById('cardS').classList.remove('selected');
@@ -479,293 +567,343 @@ window.logout = function() {
   document.getElementById('loginBtn').classList.remove('ready');
 };
 
-// ---------- NAVIGATION ----------
+// ---------- NAV ----------
 window.showPage = function(page) {
-  ['today','battle','cal','profile'].forEach(p => {
-    document.getElementById('page' + p.charAt(0).toUpperCase() + p.slice(1)).style.display = 'none';
-    const tab = document.getElementById('tab' + p.charAt(0).toUpperCase() + p.slice(1));
-    if (tab) tab.classList.remove('active');
+  ['today','battle','cal','profile'].forEach(p=>{
+    document.getElementById('page'+cap(p)).style.display='none';
+    const t=document.getElementById('tab'+cap(p));
+    if(t) t.classList.remove('active');
   });
-  document.getElementById('page' + page.charAt(0).toUpperCase() + page.slice(1)).style.display = 'block';
-  const tab = document.getElementById('tab' + page.charAt(0).toUpperCase() + page.slice(1));
-  if (tab) tab.classList.add('active');
-
-  const titles = {today:'Today', battle:'The Battle', cal:'Calendar', profile:'My Stats'};
-  document.getElementById('topTitle').textContent = titles[page] || '';
-
-  if (page === 'today')   renderToday();
-  if (page === 'battle')  renderBattle();
-  if (page === 'cal')     renderCal();
-  if (page === 'profile') renderProfile();
+  document.getElementById('page'+cap(page)).style.display='block';
+  const tab=document.getElementById('tab'+cap(page));
+  if(tab) tab.classList.add('active');
+  const titles={today:'Today',battle:'The Battle',cal:'Calendar',profile:'My Stats'};
+  document.getElementById('topTitle').textContent=titles[page]||'';
+  if(page==='today')   renderToday();
+  if(page==='battle')  renderBattle();
+  if(page==='cal')     renderCal();
+  if(page==='profile') renderProfile();
 };
 
-function refreshAll() {
-  const pages = ['today','battle','cal','profile'];
-  pages.forEach(p => {
-    const el = document.getElementById('page' + p.charAt(0).toUpperCase() + p.slice(1));
-    if (el && el.style.display !== 'none') {
-      if (p === 'today')   renderToday();
-      if (p === 'battle')  renderBattle();
-      if (p === 'cal')     renderCal();
-      if (p === 'profile') renderProfile();
+function cap(s){return s.charAt(0).toUpperCase()+s.slice(1)}
+
+function refreshAll(){
+  ['today','battle','cal','profile'].forEach(p=>{
+    const el=document.getElementById('page'+cap(p));
+    if(el&&el.style.display!=='none'){
+      if(p==='today')   renderToday();
+      if(p==='battle')  renderBattle();
+      if(p==='cal')     renderCal();
+      if(p==='profile') renderProfile();
     }
   });
 }
 
 // ---------- TODAY ----------
-function renderToday() {
-  const now  = new Date();
-  const opts = {weekday:'long', month:'long', day:'numeric'};
-  document.getElementById('dateLine').textContent = now.toLocaleDateString('en-CA', opts);
+function renderToday(){
+  const now=new Date();
+  document.getElementById('dateLine').textContent=now.toLocaleDateString('en-CA',{weekday:'long',month:'long',day:'numeric'});
+  const me=currentUser==='stephen'?'s':'a';
+  const them=me==='s'?'a':'s';
+  const tk=todayKey();
+  const myH=(liveData[tk]&&liveData[tk][me])||[];
+  const theirH=(liveData[tk]&&liveData[tk][them])||[];
+  const theirName=currentUser==='stephen'?'Amber':'Stephen';
+  document.getElementById('myScore').textContent=`${myH.length}/10`;
+  document.getElementById('theirLabel').textContent=`${theirName} today`;
+  document.getElementById('theirScore').textContent=theirH.length>0?`${theirH.length}/10`:'—';
 
-  const me    = currentUser === 'stephen' ? 's' : 'a';
-  const them  = me === 's' ? 'a' : 's';
-  const tk    = todayKey();
-  const myH   = (liveData[tk] && liveData[tk][me])   || [];
-  const theirH= (liveData[tk] && liveData[tk][them]) || [];
-  const theirName = currentUser === 'stephen' ? 'Amber' : 'Stephen';
+  // Auto taunt
+  const taunts=currentUser==='stephen'?AUTO_TAUNTS_S:AUTO_TAUNTS_A;
+  const taunt=document.getElementById('tauntAuto');
+  if(theirH.length>myH.length){
+    taunt.style.display='flex';
+    document.getElementById('tauntText').textContent=taunts[Math.floor(Math.random()*taunts.length)];
+  } else { taunt.style.display='none'; }
 
-  document.getElementById('myScore').textContent    = `${myH.length}/10`;
-  document.getElementById('theirLabel').textContent = `${theirName} today`;
-  document.getElementById('theirScore').textContent = theirH.length > 0 ? `${theirH.length}/10` : '—';
+  // Incoming gloat
+  const gloatKey='gloat_'+them+'_to_'+me;
+  const gloatData=liveData[gloatKey];
+  const ig=document.getElementById('incomingGloat');
+  if(gloatData&&gloatData.text&&!gloatData.dismissed_by_me){
+    document.getElementById('igFrom').textContent=(them==='s'?'😏 Stephen says:':'😏 Amber says:');
+    document.getElementById('igText').textContent=gloatData.text;
+    ig.style.display='block';
+    ig._key=gloatKey; ig._them=them;
+  } else { ig.style.display='none'; }
 
-  const taunts = currentUser === 'stephen' ? TAUNTS : TAUNTS_A;
-  const taunt  = document.getElementById('tauntBox');
-  if (theirH.length > myH.length) {
-    taunt.style.display = 'flex';
-    document.getElementById('tauntText').textContent = taunts[Math.floor(Math.random() * taunts.length)];
-  } else {
-    taunt.style.display = 'none';
-  }
+  // Gloat button — only enabled if you're leading
+  const myTotal=totalPts(me); const theirTotal=totalPts(them);
+  const gBtn=document.getElementById('gloatBtn');
+  gBtn.classList.toggle('disabled', myTotal<=theirTotal);
+  if(myTotal<=theirTotal&&gloatOpen) closeGloat();
 
-  const list = document.getElementById('habitList');
-  list.innerHTML = '';
-  HABITS.forEach(h => {
-    const done = myH.includes(h.id);
-    const div  = document.createElement('div');
-    div.className = 'habit-item' + (done ? ' done' : '');
-    div.innerHTML = `
-      <div class="hicon"><i class="ti ${h.icon}"></i></div>
-      <div class="htext">
-        <div class="hname">${h.name}</div>
-        <div class="hrule">${h.rule}</div>
-      </div>
-      <div class="hcheck"><i class="ti ti-check"></i></div>`;
-    div.addEventListener('click', () => toggleHabit(h.id, div));
+  // Habit list
+  const list=document.getElementById('habitList');
+  list.innerHTML='';
+  HABITS.forEach(h=>{
+    const done=myH.includes(h.id);
+    const div=document.createElement('div');
+    div.className='habit-item'+(done?' done':'');
+    div.innerHTML=`<div class="hicon"><i class="ti ${h.icon}"></i></div><div class="htext"><div class="hname">${h.name}</div><div class="hrule">${h.rule}</div></div><div class="hcheck"><i class="ti ti-check"></i></div>`;
+    div.addEventListener('click',()=>toggleHabit(h.id,div));
     list.appendChild(div);
   });
 }
 
-function toggleHabit(id, el) {
-  const me = currentUser === 'stephen' ? 's' : 'a';
-  const tk = todayKey();
-  if (!liveData[tk]) liveData[tk] = {};
-  if (!liveData[tk][me]) liveData[tk][me] = [];
-  const arr  = [...liveData[tk][me]];
-  const idx  = arr.indexOf(id);
-  if (idx > -1) arr.splice(idx, 1); else arr.push(id);
-  liveData[tk][me] = arr;
-  if (!localEdits[tk]) localEdits[tk] = {};
-  localEdits[tk][me] = arr;
+function toggleHabit(id,el){
+  const me=currentUser==='stephen'?'s':'a';
+  const tk=todayKey();
+  if(!liveData[tk])liveData[tk]={};
+  if(!liveData[tk][me])liveData[tk][me]=[];
+  const arr=[...liveData[tk][me]];
+  const idx=arr.indexOf(id);
+  if(idx>-1) arr.splice(idx,1); else arr.push(id);
+  liveData[tk][me]=arr;
+  if(!localEdits[tk])localEdits[tk]={};
+  localEdits[tk][me]=arr;
   el.classList.toggle('done');
-  document.getElementById('myScore').textContent = `${arr.length}/10`;
+  document.getElementById('myScore').textContent=`${arr.length}/10`;
 }
 
-window.saveToday = async function() {
-  const me = currentUser === 'stephen' ? 's' : 'a';
-  const tk = todayKey();
-  const habits = (liveData[tk] && liveData[tk][me]) || [];
-  try {
-    await set(ref(db, `logs/${tk}/${me}`), habits);
-    localEdits = {};
-    const btn = document.getElementById('saveBtn');
-    btn.textContent = '✓ Saved!';
-    btn.classList.add('saved');
-    setTimeout(() => { btn.textContent = "Save today's log"; btn.classList.remove('saved'); }, 2000);
+window.saveToday=async function(){
+  const me=currentUser==='stephen'?'s':'a';
+  const tk=todayKey();
+  const habits=(liveData[tk]&&liveData[tk][me])||[];
+  try{
+    await set(ref(db,`logs/${tk}/${me}`),habits);
+    localEdits={};
+    const btn=document.getElementById('saveBtn');
+    btn.textContent='✓ Saved!'; btn.classList.add('saved');
+    setTimeout(()=>{btn.textContent="Save today's log";btn.classList.remove('saved');},2000);
     showToast(`${habits.length}/10 habits logged 🎉`);
-  } catch(e) {
-    showToast('Save failed — check connection');
+  } catch(e){ showToast('Save failed — check connection'); }
+};
+
+// ---------- GLOAT ----------
+window.toggleGloat=function(){
+  if(gloatOpen){closeGloat();return;}
+  const me=currentUser==='stephen'?'s':'a';
+  const them=me==='s'?'a':'s';
+  const myTotal=totalPts(me);
+  const theirTotal=totalPts(them);
+  if(myTotal<=theirTotal){showToast("You have to be winning to gloat 😅");return;}
+  const panel=document.getElementById('gloatPanel');
+  const opts=document.getElementById('gloatOptions');
+  const gloats=currentUser==='stephen'?GLOATS_S:GLOATS_A;
+  opts.innerHTML='';
+  gloats.forEach(g=>{
+    const btn=document.createElement('button');
+    btn.className='gloat-opt';
+    btn.textContent=g;
+    btn.onclick=()=>sendGloat(g,them);
+    opts.appendChild(btn);
+  });
+  panel.style.display='block';
+  gloatOpen=true;
+};
+
+window.closeGloat=function(){
+  document.getElementById('gloatPanel').style.display='none';
+  gloatOpen=false;
+};
+
+async function sendGloat(text,them){
+  const me=currentUser==='stephen'?'s':'a';
+  const key='gloat_'+me+'_to_'+them;
+  await set(ref(db,`logs/${key}`),{text,from:me,ts:Date.now()});
+  closeGloat();
+  showToast('Gloat sent 😏');
+}
+
+window.dismissGloat=async function(){
+  const ig=document.getElementById('incomingGloat');
+  const key=ig._key;
+  const them=ig._them;
+  if(key){
+    await set(ref(db,`logs/${key}/dismissed_by_me`),true);
+    ig.style.display='none';
   }
 };
 
 // ---------- BATTLE ----------
-function totalPts(person) {
-  return Object.values(liveData).reduce((t, day) => t + ((day[person] || []).length), 0);
+function totalPts(person){
+  return Object.entries(liveData).reduce((t,[k,day])=>{
+    if(k.startsWith('gloat_'))return t;
+    return t+((day[person]||[]).length);
+  },0);
 }
 
-function calcStreak(person) {
-  const now = new Date(); let count = 0;
-  const d = new Date(now);
-  while (count < 62) {
-    const k = dk(d.getFullYear(), d.getMonth(), d.getDate());
-    if (((liveData[k] && liveData[k][person]) || []).length === HABITS.length) {
-      count++; d.setDate(d.getDate() - 1);
-    } else break;
+function calcStreak(person){
+  const now=new Date(); let count=0;
+  const d=new Date(now);
+  while(count<365){
+    const k=dk(d.getFullYear(),d.getMonth(),d.getDate());
+    if(((liveData[k]&&liveData[k][person])||[]).length===HABITS.length){count++;d.setDate(d.getDate()-1);}
+    else break;
   }
   return count;
 }
 
-function renderBattle() {
-  const sP = totalPts('s'), aP = totalPts('a');
-  document.getElementById('vsPtsS').textContent = sP;
-  document.getElementById('vsPtsA').textContent = aP;
-  ['vsS','vsA'].forEach(id => {
-    const el = document.getElementById(id);
+function renderBattle(){
+  const sP=totalPts('s'),aP=totalPts('a');
+  document.getElementById('vsPtsS').textContent=sP;
+  document.getElementById('vsPtsA').textContent=aP;
+  ['vsS','vsA'].forEach(id=>{
+    const el=document.getElementById(id);
     el.classList.remove('leading');
-    el.querySelectorAll('.lead-badge').forEach(b => b.remove());
+    el.querySelectorAll('.lead-badge').forEach(b=>b.remove());
   });
-  if (sP > aP) {
+  if(sP>aP){
     document.getElementById('vsS').classList.add('leading');
-    const b = document.createElement('div'); b.className = 'lead-badge'; b.textContent = '👑 leading';
+    const b=document.createElement('div');b.className='lead-badge';b.textContent='👑 leading';
     document.getElementById('vsS').appendChild(b);
-  } else if (aP > sP) {
+  } else if(aP>sP){
     document.getElementById('vsA').classList.add('leading');
-    const b = document.createElement('div'); b.className = 'lead-badge'; b.textContent = '👑 leading';
+    const b=document.createElement('div');b.className='lead-badge';b.textContent='👑 leading';
     document.getElementById('vsA').appendChild(b);
   }
+  document.getElementById('strkS').textContent=calcStreak('s')+' days';
+  document.getElementById('strkA').textContent=calcStreak('a')+' days';
 
-  document.getElementById('strkS').textContent = calcStreak('s') + ' days';
-  document.getElementById('strkA').textContent = calcStreak('a') + ' days';
+  const now=new Date();
+  const dayNum=Math.max(0,Math.min(TOTAL_DAYS,Math.floor((now-START)/86400000)+1));
+  const pct=Math.round((dayNum/TOTAL_DAYS)*100);
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('battleSub').textContent=`Day ${dayNum} of ${TOTAL_DAYS} · ${Math.max(0,TOTAL_DAYS-dayNum)} days left`;
 
-  const now = new Date();
-  const day = Math.max(0, Math.min(30, Math.floor((now - START) / 86400000) + 1));
-  document.getElementById('dayCount').textContent = `Day ${day} of 30 · July 1–30`;
-
-  // Weekly winners
-  const weeks = [
-    {label:'Week 1', start:new Date(2026,6,1),  end:new Date(2026,6,7)},
-    {label:'Week 2', start:new Date(2026,6,8),  end:new Date(2026,6,14)},
-    {label:'Week 3', start:new Date(2026,6,15), end:new Date(2026,6,21)},
-    {label:'Week 4', start:new Date(2026,6,22), end:new Date(2026,6,30)},
-  ];
-  const wt = document.getElementById('weekTable');
-  wt.innerHTML = '';
-  weeks.forEach(w => {
-    let sp = 0, ap = 0;
-    for (const d = new Date(w.start); d <= w.end; d.setDate(d.getDate() + 1)) {
-      const k = dk(d.getFullYear(), d.getMonth(), d.getDate());
-      sp += ((liveData[k] && liveData[k].s) || []).length;
-      ap += ((liveData[k] && liveData[k].a) || []).length;
+  // Dynamic weekly breakdown
+  const wt=document.getElementById('weekTable');
+  wt.innerHTML='';
+  const totalWeeks=Math.ceil(TOTAL_DAYS/7);
+  for(let w=0;w<totalWeeks;w++){
+    const wStart=new Date(START); wStart.setDate(wStart.getDate()+w*7);
+    const wEnd=new Date(wStart); wEnd.setDate(wEnd.getDate()+6);
+    const actualEnd=wEnd>END?END:wEnd;
+    let sp=0,ap=0;
+    for(const d=new Date(wStart);d<=actualEnd;d.setDate(d.getDate()+1)){
+      const k=dk(d.getFullYear(),d.getMonth(),d.getDate());
+      if(liveData[k]&&!k.startsWith('gloat_')){
+        sp+=((liveData[k].s)||[]).length;
+        ap+=((liveData[k].a)||[]).length;
+      }
     }
-    const over = now > w.end;
-    const row  = document.createElement('div'); row.className = 'week-row';
-    let pill = '';
-    if (!over && sp === 0 && ap === 0) pill = `<span class="badge badge-up">upcoming</span>`;
-    else if (sp > ap) pill = `<span class="badge badge-s">Stephen (${sp}–${ap}) 🎯</span>`;
-    else if (ap > sp) pill = `<span class="badge badge-a">Amber (${ap}–${sp}) 🎯</span>`;
-    else              pill = `<span class="badge badge-tie">Tied (${sp} each)</span>`;
-    row.innerHTML = `<span class="week-label">${w.label}</span>${pill}`;
+    const over=now>actualEnd;
+    const row=document.createElement('div'); row.className='week-row';
+    let pill='';
+    if(!over&&sp===0&&ap===0) pill=`<span class="badge badge-up">upcoming</span>`;
+    else if(sp>ap) pill=`<span class="badge badge-s">Stephen (${sp}–${ap}) 🎯</span>`;
+    else if(ap>sp) pill=`<span class="badge badge-a">Amber (${ap}–${sp}) 🎯</span>`;
+    else pill=`<span class="badge badge-tie">Tied (${sp})</span>`;
+    row.innerHTML=`<span class="week-label">Week ${w+1}</span>${pill}`;
     wt.appendChild(row);
-  });
+  }
 
-  // Habit breakdown
-  const hb = document.getElementById('hbTable');
-  hb.innerHTML = '';
-  HABITS.forEach(h => {
-    let sc = 0, ac = 0;
-    Object.values(liveData).forEach(day => {
-      if ((day.s || []).includes(h.id)) sc++;
-      if ((day.a || []).includes(h.id)) ac++;
+  const hb=document.getElementById('hbTable');
+  hb.innerHTML='';
+  HABITS.forEach(h=>{
+    let sc=0,ac=0;
+    Object.entries(liveData).forEach(([k,day])=>{
+      if(k.startsWith('gloat_'))return;
+      if((day.s||[]).includes(h.id))sc++;
+      if((day.a||[]).includes(h.id))ac++;
     });
-    const row = document.createElement('div'); row.className = 'hb-row';
-    row.innerHTML = `
-      <i class="ti ${h.icon} hb-icon"></i>
-      <span class="hb-name">${h.name}</span>
-      <div class="hb-scores">
-        <span class="hb-score hb-s">${sc}</span>
-        <span class="hb-score hb-a">${ac}</span>
-      </div>`;
+    const row=document.createElement('div'); row.className='hb-row';
+    row.innerHTML=`<i class="ti ${h.icon} hb-icon"></i><span class="hb-name">${h.name}</span><div class="hb-scores"><span class="hb-score hb-s">${sc}</span><span class="hb-score hb-a">${ac}</span></div>`;
     hb.appendChild(row);
   });
 }
 
 // ---------- CALENDAR ----------
-window.calShift = function(dir) {
-  calM += dir;
-  if (calM > 11) { calM = 0; calY++; }
-  if (calM < 0)  { calM = 11; calY--; }
+window.calShift=function(dir){
+  calM+=dir;
+  if(calM>11){calM=0;calY++;}
+  if(calM<0){calM=11;calY--;}
   renderCal();
 };
 
-function renderCal() {
-  document.getElementById('calMonth').textContent =
-    new Date(calY, calM, 1).toLocaleString('default', {month:'long', year:'numeric'});
-  const grid = document.getElementById('calGrid');
-  while (grid.children.length > 7) grid.removeChild(grid.lastChild);
-
-  const firstDay     = new Date(calY, calM, 1).getDay();
-  const daysInMonth  = new Date(calY, calM + 1, 0).getDate();
-  const now          = new Date();
-  const tk           = todayKey();
-
-  for (let i = 0; i < firstDay; i++) {
-    const e = document.createElement('div'); e.className = 'cal-cell empty'; grid.appendChild(e);
-  }
-  for (let d = 1; d <= daysInMonth; d++) {
-    const k       = dk(calY, calM, d);
-    const cellD   = new Date(calY, calM, d);
-    const isFut   = cellD > now && k !== tk;
-    const isBefore= cellD < START;
-    const isToday = k === tk;
-    const cell    = document.createElement('div');
-    cell.className = 'cal-cell' +
-      (isToday   ? ' today'        : '') +
-      (isFut     ? ' future'       : '') +
-      (isBefore  ? ' before-start' : '');
-    const sH = (liveData[k] && liveData[k].s) || [];
-    const aH = (liveData[k] && liveData[k].a) || [];
-    const sPips = HABITS.map(h => `<div class="pip${sH.includes(h.id)?' s':''}"></div>`).join('');
-    const aPips = HABITS.map(h => `<div class="pip${aH.includes(h.id)?' a':''}"></div>`).join('');
-    cell.innerHTML = `<div class="cal-dn">${d}</div><div class="pip-grid">${sPips}</div><div class="pip-grid" style="margin-top:2px">${aPips}</div>`;
+function renderCal(){
+  document.getElementById('calMonth').textContent=new Date(calY,calM,1).toLocaleString('default',{month:'long',year:'numeric'});
+  const grid=document.getElementById('calGrid');
+  while(grid.children.length>7)grid.removeChild(grid.lastChild);
+  const firstDay=new Date(calY,calM,1).getDay();
+  const daysInMonth=new Date(calY,calM+1,0).getDate();
+  const now=new Date(); const tk=todayKey();
+  for(let i=0;i<firstDay;i++){const e=document.createElement('div');e.className='cal-cell empty';grid.appendChild(e);}
+  for(let d=1;d<=daysInMonth;d++){
+    const k=dk(calY,calM,d);
+    const cellD=new Date(calY,calM,d);
+    const isFut=cellD>now&&k!==tk;
+    const isBefore=cellD<START||cellD>END;
+    const isToday=k===tk;
+    const cell=document.createElement('div');
+    cell.className='cal-cell'+(isToday?' today':'')+(isFut?' future':'')+(isBefore?' before-start':'');
+    const sH=(liveData[k]&&liveData[k].s)||[];
+    const aH=(liveData[k]&&liveData[k].a)||[];
+    const sPips=HABITS.map(h=>`<div class="pip${sH.includes(h.id)?' s':''}"></div>`).join('');
+    const aPips=HABITS.map(h=>`<div class="pip${aH.includes(h.id)?' a':''}"></div>`).join('');
+    cell.innerHTML=`<div class="cal-dn">${d}</div><div class="pip-grid">${sPips}</div><div class="pip-grid" style="margin-top:2px">${aPips}</div>`;
     grid.appendChild(cell);
   }
 }
 
 // ---------- PROFILE ----------
-function renderProfile() {
-  const me   = currentUser === 'stephen' ? 's' : 'a';
-  const name = currentUser === 'stephen' ? 'Stephen' : 'Amber';
-  const init = currentUser === 'stephen' ? 'SJ' : 'AJ';
-  const cls  = currentUser === 'stephen' ? 'av-s' : 'av-a';
-
-  document.getElementById('profileAv').textContent  = init;
-  document.getElementById('profileAv').className    = 'profile-av ' + cls;
-  document.getElementById('profileName').textContent = name;
-
-  const total   = totalPts(me);
-  const streak  = calcStreak(me);
-  const perfect = Object.values(liveData).filter(d => ((d[me])||[]).length === HABITS.length).length;
-
-  document.getElementById('profileSub').textContent  = `${total} points total`;
-  document.getElementById('statTotal').textContent   = total;
-  document.getElementById('statStreak').textContent  = streak;
-  document.getElementById('statPerfect').textContent = perfect;
-
-  const days = Object.values(liveData).length || 1;
-  const bh   = document.getElementById('bestHabits');
-  bh.innerHTML = '';
-  const sorted = [...HABITS].sort((a, b) => {
-    const ac = Object.values(liveData).filter(d => (d[me]||[]).includes(a.id)).length;
-    const bc = Object.values(liveData).filter(d => (d[me]||[]).includes(b.id)).length;
-    return bc - ac;
+function renderProfile(){
+  const me=currentUser==='stephen'?'s':'a';
+  const name=currentUser==='stephen'?'Stephen':'Amber';
+  const init=currentUser==='stephen'?'SJ':'AJ';
+  const cls=currentUser==='stephen'?'av-s':'av-a';
+  document.getElementById('profileAv').textContent=init;
+  document.getElementById('profileAv').className='profile-av '+cls;
+  document.getElementById('profileName').textContent=name;
+  const total=totalPts(me);
+  const streak=calcStreak(me);
+  const validDays=Object.entries(liveData).filter(([k])=>!k.startsWith('gloat_'));
+  const perfect=validDays.filter(([,d])=>((d[me])||[]).length===HABITS.length).length;
+  document.getElementById('profileSub').textContent=`${total} points total`;
+  document.getElementById('statTotal').textContent=total;
+  document.getElementById('statStreak').textContent=streak;
+  document.getElementById('statPerfect').textContent=perfect;
+  const days=validDays.length||1;
+  const bh=document.getElementById('bestHabits');
+  bh.innerHTML='';
+  const sorted=[...HABITS].sort((a,b)=>{
+    const ac=validDays.filter(([,d])=>(d[me]||[]).includes(a.id)).length;
+    const bc=validDays.filter(([,d])=>(d[me]||[]).includes(b.id)).length;
+    return bc-ac;
   });
-  sorted.slice(0, 5).forEach(h => {
-    const count = Object.values(liveData).filter(d => (d[me]||[]).includes(h.id)).length;
-    const pct   = Math.round((count / Math.max(days, 1)) * 100);
-    const row   = document.createElement('div'); row.className = 'bh-row';
-    row.innerHTML = `
-      <i class="ti ${h.icon}" style="font-size:15px;color:var(--text2);flex-shrink:0"></i>
-      <span class="bh-name">${h.name}</span>
-      <div class="bh-bar-wrap"><div class="bh-bar" style="width:${pct}%"></div></div>
-      <span class="bh-pct">${pct}%</span>`;
+  sorted.slice(0,5).forEach(h=>{
+    const count=validDays.filter(([,d])=>(d[me]||[]).includes(h.id)).length;
+    const pct=Math.round((count/Math.max(days,1))*100);
+    const row=document.createElement('div'); row.className='bh-row';
+    row.innerHTML=`<i class="ti ${h.icon}" style="font-size:15px;color:var(--text2);flex-shrink:0"></i><span class="bh-name">${h.name}</span><div class="bh-bar-wrap"><div class="bh-bar" style="width:${pct}%"></div></div><span class="bh-pct">${pct}%</span>`;
     bh.appendChild(row);
   });
 }
 
 // ---------- INIT ----------
-document.getElementById('loadingScreen').classList.remove('active');
-document.getElementById('loginScreen').classList.add('active');
+async function init(){
+  const snap=await get(ref(db,'config'));
+  const config=snap.val();
+  document.getElementById('loadingScreen').classList.remove('active');
+  if(config&&loadConfig(config)){
+    const start=new Date(START);
+    const end=new Date(END);
+    const fmt={month:'short',day:'numeric'};
+    document.getElementById('loginDates').textContent=
+      `${start.toLocaleDateString('en-CA',fmt)} – ${end.toLocaleDateString('en-CA',fmt)} · ${TOTAL_DAYS} days`;
+    document.getElementById('loginScreen').classList.add('active');
+  } else {
+    const today=new Date();
+    const yyyy=today.getFullYear();
+    const mm=String(today.getMonth()+1).padStart(2,'0');
+    const dd=String(today.getDate()).padStart(2,'0');
+    document.getElementById('setupStartDate').value=`${yyyy}-${mm}-${dd}`;
+    document.getElementById('setupScreen').classList.add('active');
+  }
+}
 
+init();
 </script>
 </body>
 </html>
