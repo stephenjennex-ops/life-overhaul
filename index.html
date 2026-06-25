@@ -1094,6 +1094,21 @@ function renderDateBrief(sec,week,dateData,winner){
     const rateBtn=document.createElement('button');rateBtn.className='rate-btn';rateBtn.textContent='Rate this date ⭐';
     rateBtn.onclick=()=>renderRating(sec,week,dateData);sec.appendChild(rateBtn);
   }
+
+  // Reset picks — only winner can reset
+  const me=currentUser==='stephen'?'stephen':'amber';
+  if(winner===me){
+    const resetBtn=document.createElement('button');
+    resetBtn.style.cssText='width:100%;padding:11px;background:transparent;color:var(--text3);border:1px solid var(--border);border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;margin-top:6px';
+    resetBtn.textContent='↩ Change my picks';
+    resetBtn.onclick=async()=>{
+      if(!confirm('Reset your date picks and start over?'))return;
+      await remove(ref(db,`logs/date_w${week}`));
+      showToast('Picks cleared — pick again!');
+      renderDate();
+    };
+    sec.appendChild(resetBtn);
+  }
 }
 
 function renderRating(sec,week,dateData){
