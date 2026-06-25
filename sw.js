@@ -1,4 +1,4 @@
-const CACHE = 'life-overhaul-v1';
+const CACHE = 'life-overhaul-v3';
 const ASSETS = [
   '/life-overhaul/',
   '/life-overhaul/index.html',
