@@ -1053,7 +1053,12 @@ function renderDate(){
       const wS=new Date(START);wS.setDate(wS.getDate()+w*7);
       const{winner:pw}=getWeekWinner(wS,new Date(wS.getTime()+6*86400000));
       const item=document.createElement('div');item.className='date-log-item';
-      item.innerHTML=`<div class="dli-header"><span class="dli-week">Week ${w+1}</span><span class="dli-winner ${pw==='stephen'?'s':'a'}">${pw==='stephen'?'Stephen':'Amber'} picked</span></div><div class="dli-vibe">${d.newOrFav||''} · ${d.mood||''}</div>${d.wish?`<div class="dli-wish">"${d.wish}"</div>`:''}<div style="font-size:12px;color:var(--text2);margin-top:4px">${d.location||''} · ${d.budget||''}</div>${d.rating?`<div class="dli-rating">${'⭐'.repeat(d.rating)} ${d.note||''}</div>`:''}`;
+      const wishHtml2 = d.wish ? '<div class="dli-wish">"'+d.wish+'"</div>' : '';
+      const locHtml2 = d.location ? '<div style="font-size:12px;color:var(--text2);margin-top:4px">'+d.location+' · '+(d.budget||'')+'</div>' : '';
+      const ratingHtml2 = d.rating ? '<div class="dli-rating">'+'\u2b50'.repeat(d.rating)+' '+(d.note||'')+'</div>' : '';
+      const winCls = pw==='stephen'?'s':'a';
+      const winLabel = pw==='stephen'?'Stephen':'Amber';
+      item.innerHTML = '<div class="dli-header"><span class="dli-week">Week '+(w+1)+'</span><span class="dli-winner '+winCls+'">'+winLabel+' picked</span></div><div class="dli-vibe">'+(d.newOrFav||'')+' · '+(d.mood||'')+'</div>'+wishHtml2+locHtml2+ratingHtml2;
       sec.appendChild(item);
     }
   }
@@ -1066,7 +1071,8 @@ function renderDateBrief(sec,week,dateData,winner){
   const loserName=winner==='stephen'?'Amber':'Stephen';
 
   const hero=document.createElement('div');
-  hero.innerHTML=`<div class="winner-hero"><div class="winner-trophy">🏆</div><div class="winner-title">${winnerName} won Week ${week+1}!</div><div class="winner-sub">${isLoser?`${winnerName} has spoken. You are planning this date.`:`${loserName} is planning your date.`}</div></div>`;
+  const heroSub = isLoser ? winnerName+' has spoken. You are planning this date.' : loserName+' is planning your date.';
+  hero.innerHTML='<div class="winner-hero"><div class="winner-trophy">🏆</div><div class="winner-title">'+winnerName+' won Week '+(week+1)+'!</div><div class="winner-sub">'+heroSub+'</div></div>';
   sec.appendChild(hero);
 
   const brief=document.createElement('div');
@@ -1115,18 +1121,21 @@ function renderRating(sec,week,dateData){
   panel.style.cssText='background:var(--bg);border:1.5px solid var(--border);border-radius:var(--rl);padding:16px;margin-bottom:16px';
   panel.innerHTML=`<div style="font-size:16px;font-weight:800;margin-bottom:12px">How was the date? ⭐</div>
   <div style="display:flex;gap:8px;margin-bottom:12px;justify-content:center">
-    ${[1,2,3,4,5].map(n=>`<button onclick="this.parentNode.querySelectorAll('button').forEach(b=>b.style.opacity='0.4');this.style.opacity='1';this.closest('[data-rating]')||this.closest('div[style]').setAttribute('data-rating',${n})" style="font-size:28px;background:none;border:none;cursor:pointer">⭐</button>`).join('')}
+    <button onclick="rateDate(1)" style="font-size:28px;background:none;border:none;cursor:pointer" class="star-btn">⭐</button><button onclick="rateDate(2)" style="font-size:28px;background:none;border:none;cursor:pointer" class="star-btn">⭐</button><button onclick="rateDate(3)" style="font-size:28px;background:none;border:none;cursor:pointer" class="star-btn">⭐</button><button onclick="rateDate(4)" style="font-size:28px;background:none;border:none;cursor:pointer" class="star-btn">⭐</button><button onclick="rateDate(5)" style="font-size:28px;background:none;border:none;cursor:pointer" class="star-btn">⭐</button>
   </div>
   <textarea class="wish-input" placeholder="A note about the date (optional)" id="dateNote" rows="2"></textarea>
   <button class="settings-save" onclick="saveRating(${week})">Save rating</button>`;
   sec.appendChild(panel);
 }
 
+let selectedRating=0;
+window.rateDate=function(n){
+  selectedRating=n;
+  document.querySelectorAll('.star-btn').forEach((b,i)=>{b.style.opacity=i<n?'1':'0.4';});
+};
 window.saveRating=async function(week){
-  const stars=document.querySelectorAll('[data-rating]');
   const note=document.getElementById('dateNote').value;
-  const ratingEl=document.querySelector('div[data-rating]');
-  const rating=ratingEl?parseInt(ratingEl.getAttribute('data-rating')):3;
+  const rating=selectedRating||3;
   const dk2=`date_w${week}`;
   const existing=liveData[dk2]||{};
   await set(ref(db,`logs/${dk2}`),{...existing,rating,note});
@@ -1147,9 +1156,11 @@ function renderQStep(wrap){
   if(qStep<DATE_Q.length){
     const q=DATE_Q[qStep];
     const div=document.createElement('div');div.className='q-step active';
-    div.innerHTML=`<div class="q-title">${q.title}</div><div class="q-sub">${q.sub}</div>
-    <div class="q-options">${q.opts.map(o=>`<button class="q-opt" onclick="selectQOpt(this,'${q.id}','${o.val}')">${o.emoji?`<span class="q-opt-emoji">${o.emoji}</span>`:''}<span>${o.label}</span></button>`).join('')}</div>
-    <button class="q-next" id="qNext" onclick="nextQStep()">Next →</button>`;
+    const optsHtml = q.opts.map(o=>{
+      const emojiHtml = o.emoji ? '<span class="q-opt-emoji">'+o.emoji+'</span>' : '';
+      return '<button class="q-opt" onclick="selectQOpt(this,\''+q.id+'\',\''+o.val+'\')">'+emojiHtml+'<span>'+o.label+'</span></button>';
+    }).join('');
+    div.innerHTML='<div class="q-title">'+q.title+'</div><div class="q-sub">'+q.sub+'</div><div class="q-options">'+optsHtml+'</div><button class="q-next" id="qNext" onclick="nextQStep()">Next →</button>';
     wrap.appendChild(div);
     if(qAnswers[q.id]){const opts=wrap.querySelectorAll('.q-opt');opts.forEach(o=>{if(o.querySelector('span:last-child').textContent===q.opts.find(opt=>opt.val===qAnswers[q.id])?.label)o.classList.add('selected');});document.getElementById('qNext').classList.add('ready');}
   } else {
