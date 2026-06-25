@@ -1060,8 +1060,8 @@ function renderDate(){
 }
 
 function renderDateBrief(sec,week,dateData,winner){
-  const me=currentUser==='stephen'?'stephen':'amber';
-  const isLoser=winner!==me;
+  const meUser=currentUser==='stephen'?'stephen':'amber';
+  const isLoser=winner!==meUser;
   const winnerName=winner==='stephen'?'Stephen':'Amber';
   const loserName=winner==='stephen'?'Amber':'Stephen';
 
@@ -1096,8 +1096,7 @@ function renderDateBrief(sec,week,dateData,winner){
   }
 
   // Reset picks — only winner can reset
-  const me=currentUser==='stephen'?'stephen':'amber';
-  if(winner===me){
+  if(winner===meUser){
     const resetBtn=document.createElement('button');
     resetBtn.style.cssText='width:100%;padding:11px;background:transparent;color:var(--text3);border:1px solid var(--border);border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;margin-top:6px';
     resetBtn.textContent='↩ Change my picks';
