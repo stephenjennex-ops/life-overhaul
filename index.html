@@ -60,27 +60,57 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .setup-btn:active{opacity:0.85;transform:scale(0.98)}
 
 /* LOGIN */
-#loginScreen{background:var(--bg)}
-.login-hero{background:linear-gradient(135deg,var(--green),var(--green-d));padding:3rem 1.5rem 2.5rem;text-align:center}
-.login-hero h1{font-size:28px;font-weight:800;color:#fff;letter-spacing:-0.5px}
-.login-hero p{font-size:14px;color:rgba(255,255,255,0.8);margin-top:4px}
-.login-dates{display:inline-block;background:rgba(255,255,255,0.2);color:#fff;font-size:12px;padding:5px 14px;border-radius:20px;margin-top:10px;font-weight:600}
-.login-body{padding:1.5rem}
-.login-q{font-size:13px;color:var(--text2);margin-bottom:12px;font-weight:600}
-.player-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem}
-.player-card{border:2px solid var(--border);border-radius:var(--rl);padding:1.5rem 1rem;text-align:center;cursor:pointer;background:var(--bg);transition:all 0.15s;user-select:none}
-.player-card:active{transform:scale(0.97)}
-.player-card.selected{border-color:var(--green);background:var(--green-l)}
-.avatar{width:56px;height:56px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800}
-.av-s{background:var(--green-l);color:var(--green-d)}
-.av-a{background:var(--blue-l);color:var(--blue-d)}
-.player-card.selected .av-s{background:var(--green-m)}
+#loginScreen{background:var(--bg);overflow-y:auto}
+.login-screen-inner{min-height:100%;display:flex;flex-direction:column}
+.login-hero{position:relative;overflow:hidden;padding:2.5rem 1.5rem 2rem;text-align:center;background:#0F6E56}
+.login-hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#1D9E75 0%,#0F6E56 50%,#185FA5 100%);z-index:0}
+.login-orb{position:absolute;border-radius:50%;opacity:0.15;animation:float 6s ease-in-out infinite}
+.login-orb-1{width:200px;height:200px;background:#fff;top:-60px;right:-60px;animation-delay:0s}
+.login-orb-2{width:120px;height:120px;background:#F5A623;bottom:-30px;left:-30px;animation-delay:2s}
+.login-orb-3{width:80px;height:80px;background:#378ADD;top:40%;left:10%;animation-delay:4s}
+@keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-12px) scale(1.05)}}
+.login-hero-content{position:relative;z-index:1}
+.login-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);color:#fff;font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;margin-bottom:12px;border:1px solid rgba(255,255,255,0.2);letter-spacing:0.05em;text-transform:uppercase}
+.login-hero h1{font-size:32px;font-weight:800;color:#fff;letter-spacing:-1px;line-height:1.1;margin-bottom:6px}
+.login-hero h1 span{color:#9FE1CB}
+.login-tagline{font-size:14px;color:rgba(255,255,255,0.8);margin-bottom:14px;font-weight:500}
+.login-dates{display:inline-block;background:rgba(255,255,255,0.2);color:#fff;font-size:12px;padding:6px 16px;border-radius:20px;font-weight:700;border:1px solid rgba(255,255,255,0.3)}
+.login-body{padding:1.25rem 1.25rem 0;flex:1}
+.login-q{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px}
+.player-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.player-card{border:2px solid var(--border);border-radius:16px;padding:0;cursor:pointer;background:var(--bg);transition:all 0.2s;user-select:none;overflow:hidden;position:relative}
+.player-card:active{transform:scale(0.96)}
+.player-card.selected{border-color:var(--green);box-shadow:0 0 0 3px rgba(29,158,117,0.15)}
+.player-card.selected-a{border-color:var(--blue);box-shadow:0 0 0 3px rgba(55,138,221,0.15)}
+.pc-header{padding:16px 12px 12px;text-align:center;position:relative}
+.pc-header-s{background:linear-gradient(135deg,var(--green-l),#C8F0E2)}
+.pc-header-a{background:linear-gradient(135deg,var(--blue-l),#C8DFF7)}
+.player-card.selected .pc-header-s{background:linear-gradient(135deg,var(--green-m),#7DD9BA)}
+.player-card.selected-a .pc-header-a{background:linear-gradient(135deg,#8EC6F0,#C8DFF7)}
+.pc-selected-check{position:absolute;top:8px;right:8px;width:20px;height:20px;border-radius:50%;background:var(--green);color:#fff;display:none;align-items:center;justify-content:center;font-size:11px}
+.player-card.selected .pc-selected-check{display:flex}
+.pc-selected-check-a{background:var(--blue)!important}
+.player-card.selected-a .pc-selected-check{display:flex;background:var(--blue)}
+.avatar{width:60px;height:60px;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;border:3px solid rgba(255,255,255,0.8)}
+.av-s{background:var(--green-d);color:#fff}
+.av-a{background:var(--blue-d);color:#fff}
 .pname{font-size:17px;font-weight:800;color:var(--text)}
-.prole{font-size:12px;color:var(--text2);margin-top:2px}
-.login-btn{width:100%;padding:14px;background:var(--green);color:#fff;border:none;border-radius:var(--r);font-size:16px;font-weight:700;cursor:pointer;opacity:0.35;transition:all 0.15s}
+.pc-body{padding:10px 12px 14px}
+.pc-stat{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.pc-stat-label{font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.04em}
+.pc-stat-val{font-size:11px;font-weight:700;color:var(--text)}
+.pc-pts{font-size:22px;font-weight:800;text-align:center;margin-top:4px}
+.pc-pts-s{color:var(--green-d)}
+.pc-pts-a{color:var(--blue-d)}
+.pc-pts-label{font-size:10px;color:var(--text2);text-align:center;font-weight:600;margin-top:1px}
+.login-btn{width:100%;padding:15px;background:linear-gradient(135deg,var(--green),var(--green-d));color:#fff;border:none;border-radius:var(--r);font-size:16px;font-weight:800;cursor:pointer;opacity:0.3;transition:all 0.2s;letter-spacing:-0.3px;box-shadow:0 4px 14px rgba(29,158,117,0.3)}
 .login-btn.ready{opacity:1}
-.login-btn:active{transform:scale(0.98)}
-.reset-link{text-align:center;margin-top:14px;font-size:12px;color:var(--text3);cursor:pointer;text-decoration:underline}
+.login-btn.ready:active{transform:scale(0.98)}
+.vs-divider{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.vs-line{flex:1;height:1px;background:var(--border)}
+.vs-chip{background:linear-gradient(135deg,var(--green),var(--blue));color:#fff;font-size:12px;font-weight:800;padding:4px 12px;border-radius:20px;letter-spacing:0.05em}
+.login-footer{padding:12px 1.25rem 1.25rem;text-align:center}
+.reset-link{font-size:12px;color:var(--text3);cursor:pointer;text-decoration:underline}
 
 /* TOP BAR */
 .top-bar{background:var(--bg);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
@@ -336,27 +366,57 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 
 <!-- LOGIN -->
 <div class="screen" id="loginScreen">
-  <div class="login-hero">
-    <h1>Life Overhaul 💪</h1>
-    <p>Stephen vs Amber — who wants it more?</p>
-    <div class="login-dates" id="loginDates">Loading...</div>
-  </div>
-  <div class="login-body">
-    <div class="login-q">Who are you?</div>
-    <div class="player-cards">
-      <div class="player-card" id="cardS" onclick="selectPlayer('stephen')">
-        <div class="avatar av-s">SJ</div>
-        <div class="pname">Stephen</div>
-        <div class="prole">the challenger</div>
-      </div>
-      <div class="player-card" id="cardA" onclick="selectPlayer('amber')">
-        <div class="avatar av-a">AJ</div>
-        <div class="pname">Amber</div>
-        <div class="prole">the challenger</div>
+  <div class="login-screen-inner">
+    <div class="login-hero">
+      <div class="login-hero-bg"></div>
+      <div class="login-orb login-orb-1"></div>
+      <div class="login-orb login-orb-2"></div>
+      <div class="login-orb login-orb-3"></div>
+      <div class="login-hero-content">
+        <div class="login-badge">⚔️ 30-day challenge</div>
+        <h1>Life<br><span>Overhaul</span> 💪</h1>
+        <div class="login-tagline">Stephen vs Amber — who wants it more?</div>
+        <div class="login-dates" id="loginDates">Loading...</div>
       </div>
     </div>
-    <button class="login-btn" id="loginBtn" onclick="doLogin()">Let's go →</button>
-    <div class="reset-link" onclick="resetCompetition()">Change competition settings</div>
+    <div class="login-body">
+      <div class="login-q">Who are you logging in as?</div>
+      <div class="vs-divider"><div class="vs-line"></div><div class="vs-chip">VS</div><div class="vs-line"></div></div>
+      <div class="player-cards">
+        <div class="player-card" id="cardS" onclick="selectPlayer('stephen')">
+          <div class="pc-header pc-header-s">
+            <div class="pc-selected-check"><i class="ti ti-check" style="font-size:11px"></i></div>
+            <div class="avatar av-s">SJ</div>
+            <div class="pname">Stephen</div>
+          </div>
+          <div class="pc-body">
+            <div class="pc-pts pc-pts-s" id="loginPtsS">0</div>
+            <div class="pc-pts-label">total points</div>
+            <div style="height:8px"></div>
+            <div class="pc-stat"><span class="pc-stat-label">🔥 Streak</span><span class="pc-stat-val" id="loginStrkS">0 days</span></div>
+            <div class="pc-stat"><span class="pc-stat-label">⭐ Perfect days</span><span class="pc-stat-val" id="loginPerfS">0</span></div>
+          </div>
+        </div>
+        <div class="player-card" id="cardA" onclick="selectPlayer('amber')">
+          <div class="pc-header pc-header-a">
+            <div class="pc-selected-check pc-selected-check-a"><i class="ti ti-check" style="font-size:11px"></i></div>
+            <div class="avatar av-a">AJ</div>
+            <div class="pname">Amber</div>
+          </div>
+          <div class="pc-body">
+            <div class="pc-pts pc-pts-a" id="loginPtsA">0</div>
+            <div class="pc-pts-label">total points</div>
+            <div style="height:8px"></div>
+            <div class="pc-stat"><span class="pc-stat-label">🔥 Streak</span><span class="pc-stat-val" id="loginStrkA">0 days</span></div>
+            <div class="pc-stat"><span class="pc-stat-label">⭐ Perfect days</span><span class="pc-stat-val" id="loginPerfA">0</span></div>
+          </div>
+        </div>
+      </div>
+      <button class="login-btn" id="loginBtn" onclick="doLogin()">Let's go →</button>
+    </div>
+    <div class="login-footer">
+      <div class="reset-link" onclick="resetCompetition()">Change competition settings</div>
+    </div>
   </div>
 </div>
 
@@ -521,10 +581,10 @@ let HABITS = [
   {id:'med',     name:'Meditate',                   rule:'10 min minimum',                icon:'ti-brain'},
   {id:'sober',   name:'Sober',                      rule:'Zero alcohol all day',          icon:'ti-glass-off'},
   {id:'workout', name:'Workout',                    rule:'Any intentional exercise',      icon:'ti-barbell'},
-  {id:'nocmp',   name:'No complaining',             rule:'Full day, self-monitored',      icon:'ti-mood-smile'},
+  {id:'learn',   name:'Learn something',              rule:'10 min podcast, video, or article', icon:'ti-bulb'},
   {id:'journal', name:'Journal',                    rule:'5-10 min, pen or digital',      icon:'ti-pencil'},
   {id:'sleep',   name:'Sleep 7+ hrs',               rule:'Track it honestly',             icon:'ti-moon'},
-  {id:'nophone', name:'No phone first 30 min',      rule:'From the moment you wake',      icon:'ti-device-mobile-off'},
+  {id:'dogwalk',  name:'Dog walk or dog park',          rule:'Kita needs it, so do you',      icon:'ti-dog'},
   {id:'together',name:'Intentional time together',  rule:'Planned, phones down, 20+ min', icon:'ti-heart'},
   {id:'chore',   name:'One house chore',            rule:'Unprompted, without being asked',icon:'ti-home'},
 ];
@@ -532,13 +592,13 @@ let HABITS = [
 const GLOATS_S = [
   "Still catching up to me, babe 😏","Don't worry, I'll slow down so you can see me win 👋",
   "Scoreboard doesn't lie. Just saying 🏆","Your streak called — it went missing 😂",
-  "Even Gyro is impressed with my discipline 🐱","Kita said she's rooting for me. Sorry 🐕",
+  "Even Gyro is impressed with my discipline 🐱","Kita said she's rooting for me. Sorry 🐕","Bodhi is running circles around your habits 🌀",
   "This is what peak performance looks like 💪","I logged all 10 before you woke up 😴",
 ];
 const GLOATS_A = [
   "Cute that you think you're winning 😘","I logged all 10 today. How's your score? 💅",
   "The scoreboard is uncomfortable for you right now 😂","Keep working babe, you'll get there 👏",
-  "Gyro is judging you, not me 🐱","I did my chore AND yours today 😏",
+  "Gyro is judging you, not me 🐱","Bodhi has more energy than your excuses 🌀","I did my chore AND yours today 😏",
   "Winning feels so good 🏆","Don't worry, I'll go easy on the dare 😇",
 ];
 
@@ -658,7 +718,9 @@ window.resetCompetition=function(){
 window.selectPlayer=function(p){
   currentUser=p;
   document.getElementById('cardS').classList.toggle('selected',p==='stephen');
-  document.getElementById('cardA').classList.toggle('selected',p==='amber');
+  document.getElementById('cardS').classList.remove('selected-a');
+  document.getElementById('cardA').classList.toggle('selected-a',p==='amber');
+  document.getElementById('cardA').classList.remove('selected');
   document.getElementById('loginBtn').classList.add('ready');
 };
 
@@ -1159,13 +1221,31 @@ function renderProfile(){
   });
 }
 
+// LOGIN STATS
+function populateLoginStats(){
+  const HABITS_LEN=10;
+  function pts(p){return Object.entries(liveData).reduce((t,[k,d])=>{if(k.startsWith('gloat_')||k.startsWith('date_'))return t;return t+((d[p]||[]).length);},0);}
+  function streak(p){const now=new Date();let c=0;const d=new Date(now);while(c<365){const k=dk(d.getFullYear(),d.getMonth(),d.getDate());if(((liveData[k]&&liveData[k][p])||[]).length===HABITS_LEN){c++;d.setDate(d.getDate()-1);}else break;}return c;}
+  function perfect(p){return Object.entries(liveData).filter(([k,d])=>!k.startsWith('gloat_')&&!k.startsWith('date_')&&((d[p]||[]).length===HABITS_LEN)).length;}
+  document.getElementById('loginPtsS').textContent=pts('s');
+  document.getElementById('loginPtsA').textContent=pts('a');
+  document.getElementById('loginStrkS').textContent=streak('s')+' days';
+  document.getElementById('loginStrkA').textContent=streak('a')+' days';
+  document.getElementById('loginPerfS').textContent=perfect('s');
+  document.getElementById('loginPerfA').textContent=perfect('a');
+}
+
 // INIT
 async function init(){
   const snap=await get(ref(db,'config'));
   const config=snap.val();
+  // Load data for login screen stats
+  const dataSnap=await get(ref(db,'logs'));
+  liveData=dataSnap.val()||{};
   document.getElementById('loadingScreen').classList.remove('active');
   if(config&&loadConfig(config)){
     updateLoginDates();
+    populateLoginStats();
     document.getElementById('loginScreen').classList.add('active');
   } else {
     const today=new Date();
