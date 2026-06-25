@@ -1010,13 +1010,33 @@ function calcStreak(person){
   return count;
 }
 
+function getCalendarWeeks(){
+  var weeks=[];
+  var firstMon=new Date(START);
+  var day=firstMon.getDay();
+  var diff=day===0?-6:1-day;
+  firstMon.setDate(firstMon.getDate()+diff);
+  var wS=new Date(firstMon);
+  while(wS<=END){
+    var wE=new Date(wS);wE.setDate(wE.getDate()+6);
+    var aS=wS<START?new Date(START):new Date(wS);
+    var aE=wE>END?new Date(END):new Date(wE);
+    weeks.push({start:aS,end:aE});
+    wS.setDate(wS.getDate()+7);
+  }
+  return weeks;
+}
+
 function getWeekWinner(wStart,wEnd){
   let sp=0,ap=0;
   for(const d=new Date(wStart);d<=wEnd;d.setDate(d.getDate()+1)){
     const k=dk(d.getFullYear(),d.getMonth(),d.getDate());
     if(liveData[k]&&!k.startsWith('gloat_')){sp+=((liveData[k].s)||[]).length;ap+=((liveData[k].a)||[]).length;}
   }
-  return{sp,ap,winner:sp>ap?'stephen':ap>sp?'amber':null};
+  const now=new Date();now.setHours(0,0,0,0);
+  const weekEnd=new Date(wEnd);weekEnd.setHours(0,0,0,0);
+  const isOver=now>weekEnd;
+  return{sp,ap,winner:isOver?(sp>ap?'stephen':ap>sp?'amber':null):null};
 }
 
 function renderBadges(me, them){
@@ -1096,25 +1116,24 @@ function renderBattle(){
   document.getElementById('battleSub').textContent=`Day ${dayNum} of ${TOTAL_DAYS} · ${Math.max(0,TOTAL_DAYS-dayNum)} days left`;
 
   const wt=document.getElementById('weekTable');wt.innerHTML='';
-  const totalWeeks=Math.ceil(TOTAL_DAYS/7);
-  for(let w=0;w<totalWeeks;w++){
-    const wStart=new Date(START);wStart.setDate(wStart.getDate()+w*7);
-    const wEnd=new Date(wStart);wEnd.setDate(wEnd.getDate()+6);
-    const actualEnd=wEnd>END?new Date(END):wEnd;
-    const{sp,ap,winner}=getWeekWinner(wStart,actualEnd);
-    const over=now>actualEnd;
-    const dateKey=`date_w${w}`;
+  const calWks=getCalendarWeeks();
+  calWks.forEach(function(w,i){
+    const res=getWeekWinner(w.start,w.end);
+    const sp=res.sp,ap=res.ap,winner=res.winner;
+    const over=now>w.end;
+    const dateKey='date_w'+i;
     const datePicked=liveData[dateKey];
     const row=document.createElement('div');row.className='week-row';
     let pill='';
-    if(!over&&sp===0&&ap===0)pill=`<span class="badge badge-up">upcoming</span>`;
-    else if(winner==='stephen')pill=`<span class="badge badge-s">Stephen (${sp}–${ap}) 🎯</span>`;
-    else if(winner==='amber')pill=`<span class="badge badge-a">Amber (${ap}–${sp}) 🎯</span>`;
-    else pill=`<span class="badge badge-tie">Tied (${sp})</span>`;
-    const dateInfo=datePicked?`<div style="font-size:11px;color:var(--text2);margin-top:4px">${datePicked.newOrFav} · ${datePicked.mood}</div>`:'';
-    row.innerHTML=`<div><span class="week-label">Week ${w+1}</span>${dateInfo}</div>${pill}`;
+    if(!over&&sp===0&&ap===0)pill='<span class="badge badge-up">upcoming</span>';
+    else if(!over)pill='<span class="badge badge-tie">In progress '+sp+'-'+ap+'</span>';
+    else if(winner==='stephen')pill='<span class="badge badge-s">Stephen ('+sp+'-'+ap+') 🎯</span>';
+    else if(winner==='amber')pill='<span class="badge badge-a">Amber ('+ap+'-'+sp+') 🎯</span>';
+    else pill='<span class="badge badge-tie">Tied ('+sp+')</span>';
+    const dateInfo=datePicked?'<div style="font-size:11px;color:var(--text2);margin-top:4px">'+(datePicked.newOrFav||'')+' · '+(datePicked.mood||'')+'</div>':'';
+    row.innerHTML='<div><span class="week-label">Week '+(i+1)+'</span>'+dateInfo+'</div>'+pill;
     wt.appendChild(row);
-  }
+  });
 
   const hb=document.getElementById('hbTable');hb.innerHTML='';
   HABITS.forEach(h=>{
