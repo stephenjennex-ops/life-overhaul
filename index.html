@@ -1271,6 +1271,19 @@ async function init(){
 }
 init();
 </script>
-<script>if("serviceWorker" in navigator){navigator.serviceWorker.getRegistrations().then(regs=>{regs.forEach(r=>r.unregister());});}</script>
+<script>
+// Aggressively kill any service worker and force fresh load
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.getRegistrations().then(regs=>{
+    regs.forEach(r=>r.unregister());
+    if(regs.length>0){
+      // SW was active — reload once to get fresh content
+      if(!window.location.search.includes('cleared')){
+        window.location.replace(window.location.href.split('?')[0]+'?cleared=1');
+      }
+    }
+  });
+}
+</script>
 </body>
 </html>
