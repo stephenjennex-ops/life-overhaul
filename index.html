@@ -1256,6 +1256,6 @@ async function init(){
 }
 init();
 </script>
-<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("/life-overhaul/sw.js").catch(()=>{});}</script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.getRegistrations().then(regs=>{regs.forEach(r=>r.unregister());});}</script>
 </body>
 </html>
