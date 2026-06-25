@@ -153,6 +153,32 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
 .sb-val{font-size:22px;font-weight:800;color:var(--text)}
 .score-box.mine .sb-val{color:var(--green-d)}
 
+/* HEAD TO HEAD */
+.h2h-wrap{display:grid;grid-template-columns:1fr 60px 1fr;gap:6px;align-items:center;margin-bottom:14px}
+.h2h-card{border-radius:var(--rl);padding:14px 10px;text-align:center;border:1.5px solid var(--border)}
+.h2h-me{background:var(--green-l);border-color:var(--green-m)}
+.h2h-them{background:var(--blue-l);border-color:#A8C8F0}
+.h2h-card.winning{border-width:2.5px;box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+.h2h-me.winning{border-color:var(--green-d);box-shadow:0 4px 12px rgba(29,158,117,0.2)}
+.h2h-them.winning{border-color:var(--blue-d);box-shadow:0 4px 12px rgba(55,138,221,0.2)}
+.h2h-name{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px}
+.h2h-today{font-size:34px;font-weight:800;line-height:1;color:var(--text)}
+.h2h-me .h2h-today{color:var(--green-d)}
+.h2h-them .h2h-today{color:var(--blue-d)}
+.h2h-label{font-size:10px;color:var(--text2);font-weight:600;margin-top:2px}
+.h2h-total{font-size:11px;color:var(--text2);margin-top:6px;font-weight:500}
+.h2h-mid{text-align:center}
+.h2h-vs{font-size:13px;font-weight:800;color:var(--text3);margin-bottom:4px}
+.h2h-winner-today{font-size:18px;min-height:24px}
+
+/* ACHIEVEMENTS */
+.badges-wrap{margin-bottom:14px}
+.badges-row{display:flex;gap:8px;flex-wrap:wrap}
+.badge-item{display:flex;align-items:center;gap:6px;background:var(--gold-l);border:1px solid var(--gold);border-radius:20px;padding:5px 10px;font-size:12px;font-weight:600;color:var(--amber);animation:badgePop 0.4s ease}
+@keyframes badgePop{0%{transform:scale(0.8);opacity:0}70%{transform:scale(1.05)}100%{transform:scale(1);opacity:1}}
+.badge-item.locked{background:var(--bg2);border-color:var(--border);color:var(--text3);opacity:0.6}
+.badge-emoji{font-size:16px}
+
 /* INCOMING GLOAT */
 .incoming-gloat{background:var(--purple-l);border:1.5px solid #AFA9EC;border-radius:var(--r);padding:12px 14px;margin-bottom:14px;display:none}
 .ig-label{font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px}
@@ -457,14 +483,26 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
       </div>
       <div class="ring-sub" id="ringSub">Tap habits below to check off</div>
     </div>
-    <div class="score-duo">
-      <div class="score-box mine">
-        <div class="sb-label">My total</div>
-        <div class="sb-val" id="myTotalScore">0</div>
+    <div class="badges-wrap" id="badgesWrap" style="display:none">
+      <div class="sec-label">Achievements</div>
+      <div class="badges-row" id="badgesRow"></div>
+    </div>
+    <div class="h2h-wrap">
+      <div class="h2h-card h2h-me">
+        <div class="h2h-name" id="h2hMyName">Stephen</div>
+        <div class="h2h-today" id="h2hMyToday">0</div>
+        <div class="h2h-label">today</div>
+        <div class="h2h-total" id="h2hMyTotal">0 total</div>
       </div>
-      <div class="score-box">
-        <div class="sb-label" id="theirLabel">Amber total</div>
-        <div class="sb-val" id="theirTotalScore">—</div>
+      <div class="h2h-mid">
+        <div class="h2h-vs">VS</div>
+        <div class="h2h-winner-today" id="h2hWinnerToday"></div>
+      </div>
+      <div class="h2h-card h2h-them">
+        <div class="h2h-name" id="h2hTheirName">Amber</div>
+        <div class="h2h-today" id="h2hTheirToday">0</div>
+        <div class="h2h-label">today</div>
+        <div class="h2h-total" id="h2hTheirTotal">0 total</div>
       </div>
     </div>
     <div class="gloat-panel" id="gloatPanel">
@@ -545,6 +583,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sa
     <div class="divider"></div>
     <button class="logout-btn" onclick="logout()">Switch player</button>
     <button class="reset-comp-btn" onclick="resetCompetition()">Reset competition settings</button>
+    <button class="reset-comp-btn" style="color:var(--coral);border-color:var(--coral);margin-top:8px" onclick="resetAllData()">Reset ALL data & points</button>
   </div>
 
   <nav class="bottom-nav">
@@ -707,6 +746,22 @@ function updateLoginDates(){
     `${START.toLocaleDateString('en-CA',fmt)} – ${END.toLocaleDateString('en-CA',fmt)} · ${TOTAL_DAYS} days`;
 }
 
+window.resetAllData=async function(){
+  if(!confirm('This will delete ALL habit logs, points, dates, and competition settings. This cannot be undone. Are you sure?'))return;
+  if(!confirm('Last chance — delete everything and start fresh?'))return;
+  try{
+    await remove(ref(db,'logs'));
+    await remove(ref(db,'config'));
+    liveData={};localEdits={};
+    showToast('All data cleared');
+    logout();
+    document.getElementById('loginScreen').classList.remove('active');
+    const today=new Date();
+    const yyyy=today.getFullYear();const mm=String(today.getMonth()+1).padStart(2,'0');const dd=String(today.getDate()).padStart(2,'0');
+    document.getElementById('setupStartDate').value=yyyy+'-'+mm+'-'+dd;
+    document.getElementById('setupScreen').classList.add('active');
+  }catch(e){showToast('Error — check connection');}
+};
 window.resetCompetition=function(){
   if(!confirm('Reset competition settings? Habit logs will be kept.'))return;
   remove(ref(db,'config'));logout();
@@ -802,9 +857,25 @@ function renderToday(){
   const theirTotal=totalPts(them);
 
   updateRing(myH.length);
-  document.getElementById('myTotalScore').textContent=myTotal;
-  document.getElementById('theirLabel').textContent=`${theirName} total`;
-  document.getElementById('theirTotalScore').textContent=theirTotal;
+
+  // H2H today
+  const myName = currentUser==='stephen'?'Stephen':'Amber';
+  document.getElementById('h2hMyName').textContent = myName;
+  document.getElementById('h2hTheirName').textContent = theirName;
+  document.getElementById('h2hMyToday').textContent = myH.length;
+  document.getElementById('h2hTheirToday').textContent = theirH.length;
+  document.getElementById('h2hMyTotal').textContent = myTotal+' total';
+  document.getElementById('h2hTheirTotal').textContent = theirTotal+' total';
+  const meCard = document.querySelector('.h2h-me');
+  const themCard = document.querySelector('.h2h-them');
+  meCard.classList.remove('winning'); themCard.classList.remove('winning');
+  const todayWinner = document.getElementById('h2hWinnerToday');
+  if(myH.length > theirH.length){ meCard.classList.add('winning'); todayWinner.textContent='🔥'; }
+  else if(theirH.length > myH.length){ themCard.classList.add('winning'); todayWinner.textContent='😤'; }
+  else { todayWinner.textContent = myH.length > 0 ? '🤝' : ''; }
+
+  // Achievements
+  renderBadges(me, them);
 
   // Battle banner
   const banner=document.getElementById('battleBanner');
@@ -951,6 +1022,68 @@ function getWeekWinner(wStart,wEnd){
     if(liveData[k]&&!k.startsWith('gloat_')){sp+=((liveData[k].s)||[]).length;ap+=((liveData[k].a)||[]).length;}
   }
   return{sp,ap,winner:sp>ap?'stephen':ap>sp?'amber':null};
+}
+
+function renderBadges(me, them){
+  const validDays = Object.entries(liveData).filter(([k])=>!k.startsWith('gloat_')&&!k.startsWith('date_'));
+  const myDays = validDays.map(([,d])=>(d[me]||[]).length);
+  const theirDays = validDays.map(([,d])=>(d[them]||[]).length);
+  
+  const ACHIEVEMENTS = [
+    { id:'first_perfect', emoji:'⭐', label:'First perfect day', check:()=>myDays.some(d=>d===10) },
+    { id:'streak_3', emoji:'🔥', label:'3-day streak', check:()=>calcStreak(me)>=3 },
+    { id:'streak_7', emoji:'🔥🔥', label:'7-day streak', check:()=>calcStreak(me)>=7 },
+    { id:'streak_30', emoji:'💎', label:'30-day streak', check:()=>calcStreak(me)>=30 },
+    { id:'beat_partner', emoji:'👑', label:'Won a week', check:()=>{
+      const totalWeeks=Math.ceil(TOTAL_DAYS/7);
+      for(let w=0;w<totalWeeks;w++){
+        const wStart=new Date(START);wStart.setDate(wStart.getDate()+w*7);
+        const wEnd=new Date(wStart);wEnd.setDate(wEnd.getDate()+6);
+        const actualEnd=wEnd>END?new Date(END):wEnd;
+        const{winner}=getWeekWinner(wStart,actualEnd);
+        if(winner===(me==='s'?'stephen':'amber'))return true;
+      }
+      return false;
+    }},
+    { id:'beat_3weeks', emoji:'🏆', label:'Won 3 weeks', check:()=>{
+      const totalWeeks=Math.ceil(TOTAL_DAYS/7);
+      let wins=0;
+      for(let w=0;w<totalWeeks;w++){
+        const wStart=new Date(START);wStart.setDate(wStart.getDate()+w*7);
+        const wEnd=new Date(wStart);wEnd.setDate(wEnd.getDate()+6);
+        const actualEnd=wEnd>END?new Date(END):wEnd;
+        const{winner}=getWeekWinner(wStart,actualEnd);
+        if(winner===(me==='s'?'stephen':'amber'))wins++;
+      }
+      return wins>=3;
+    }},
+    { id:'perfect_week', emoji:'🌟', label:'Perfect week (70 pts)', check:()=>{
+      const totalWeeks=Math.ceil(TOTAL_DAYS/7);
+      for(let w=0;w<totalWeeks;w++){
+        const wStart=new Date(START);wStart.setDate(wStart.getDate()+w*7);
+        let wPts=0;
+        for(const d=new Date(wStart);d<new Date(wStart.getTime()+7*86400000);d.setDate(d.getDate()+1)){
+          const k=dk(d.getFullYear(),d.getMonth(),d.getDate());
+          wPts+=((liveData[k]&&liveData[k][me])||[]).length;
+        }
+        if(wPts>=70)return true;
+      }
+      return false;
+    }},
+  ];
+
+  const earned = ACHIEVEMENTS.filter(a=>{ try{return a.check();}catch(e){return false;} });
+  const wrap = document.getElementById('badgesWrap');
+  const row = document.getElementById('badgesRow');
+  if(earned.length===0){ wrap.style.display='none'; return; }
+  wrap.style.display='block';
+  row.innerHTML='';
+  earned.forEach(a=>{
+    const el=document.createElement('div');
+    el.className='badge-item';
+    el.innerHTML='<span class="badge-emoji">'+a.emoji+'</span><span>'+a.label+'</span>';
+    row.appendChild(el);
+  });
 }
 
 function renderBattle(){
@@ -1210,9 +1343,13 @@ function renderCal(){
     const cell=document.createElement('div');
     cell.className='cal-cell'+(isToday?' today':'')+(isFut?' future':'')+(isBefore?' before-start':'');
     const sH=(liveData[k]&&liveData[k].s)||[];const aH=(liveData[k]&&liveData[k].a)||[];
-    const sPips=HABITS.map(h=>`<div class="pip${sH.includes(h.id)?' s':''}"></div>`).join('');
-    const aPips=HABITS.map(h=>`<div class="pip${aH.includes(h.id)?' a':''}"></div>`).join('');
-    cell.innerHTML=`<div class="cal-dn">${d}</div><div class="pip-grid">${sPips}</div><div class="pip-grid" style="margin-top:2px">${aPips}</div>`;
+    const sPips=HABITS.map(h=>'<div class="pip'+(sH.includes(h.id)?' s':'')+'"></div>').join('');
+    const aPips=HABITS.map(h=>'<div class="pip'+(aH.includes(h.id)?' a':'')+'"></div>').join('');
+    const me2=currentUser==='stephen'?'s':'a';
+    const myHabitsCount=me2==='s'?sH.length:aH.length;
+    const isPast=cellD<now&&k!==tk&&!isBefore;
+    const missedDot=isPast&&myHabitsCount===0?'<div style="width:6px;height:6px;border-radius:50%;background:var(--coral);margin:2px auto 0"></div>':'';
+    cell.innerHTML='<div class="cal-dn">'+d+'</div><div class="pip-grid">'+sPips+'</div><div class="pip-grid" style="margin-top:2px">'+aPips+'</div>'+missedDot;
     grid.appendChild(cell);
   }
 }
